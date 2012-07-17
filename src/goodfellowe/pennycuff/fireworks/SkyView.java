@@ -175,15 +175,18 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			
 			y = 0;
 			
+			Particle particle = new Particle();
+			particle.paint = paint;
+			particle.paint.setARGB(255, 200, 200, 200);
 			while (threadIsRunning) {
 				// Do all drawing to the tempCanvas
 				long currentTime = System.currentTimeMillis();
-				double elapsedTimeMS = currentTime - previousFrameTime;
-				// updatePositions(elapsedTimeMS); // update game state
-				// drawGameElements(canvas); // draw
+				currentTime += 100;
+				//double elapsedTimeMS = currentTime - previousFrameTime;
 				dimCanvas(tempCanvas, currentTime);
+
 				// Draw "Stars"
-				if (random.nextInt(50) == 0) {
+				if (random.nextInt(2) == 0) {
 					starUpdate = random.nextInt(STAR_COUNT);
 					starX[starUpdate] = random.nextInt(screenWidth);
 					starY[starUpdate] = random.nextInt(screenHeight);
@@ -191,8 +194,8 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 				for (int i = 0; i < STAR_COUNT; i++) {
 					tempCanvas.drawPoint(starX[i], starY[i], color);
 				}
-				previousFrameTime = currentTime; // update previous time
 				
+				/*
 				x = (lastx + (6 * direction));
 				if (x > screenWidth || x < 0) {
 					if (x < 0) {
@@ -210,16 +213,27 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 					yvelocity = 50;
 				}
 				
-				tempCanvas.drawLine(lastx, screenHeight - lasty, x, screenHeight - y, paint);
+				//tempCanvas.drawLine(lastx, screenHeight - lasty, x, screenHeight - y, paint);
 				lastx = x;
 				lasty = y;
+				*/
+				
+				// draw the particle
+				if (!particle.isAlive()) {
+					int y1 = (screenHeight / 4) + random.nextInt(screenHeight / 2);
+					int y2 = y1 + random.nextInt(screenHeight / 4) + 1;
+					int x1 = (screenWidth / 4) + random.nextInt(screenWidth / 2);
+					while (!particle.defineCriticalPoints(random.nextInt(100), y2, x1, y1, 950 + random.nextInt(1000), screenWidth, screenHeight));
+					particle.makeAlive(previousFrameTime);
+				}
+				particle.draw(tempCanvas, currentTime);
 				
 				try {
 					canvas = surfaceHolder.lockCanvas(null);
 					// Lock the surfaceHolder for updating with bitmap
 					synchronized (surfaceHolder) {
 						canvas.drawBitmap(tempBitmap, 0, 0, null);
-						canvas.drawCircle(x, screenHeight - y, 5, paint);
+						//canvas.drawCircle(x, screenHeight - y, 5, paint);
 					}
 				}
 				finally {
@@ -227,6 +241,7 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 						surfaceHolder.unlockCanvasAndPost(canvas);
 					}
 				}
+				previousFrameTime = currentTime; // update previous time
 			}
 		}
 	}
