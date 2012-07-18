@@ -127,8 +127,16 @@ public class Particle {
 			if (time > cutoff) {
 				state = DEAD;
 			}
-			canvas.drawCircle(x1, screenHeight - y1, 5, paint);
+			//canvas.drawCircle(x1, screenHeight - y1, 5, paint);
 		}
+	}
+	
+	public int getCurrentX() {
+		return lastX;
+	}
+	
+	public int getCurrentY() {
+		return lastY;
 	}
 
 }

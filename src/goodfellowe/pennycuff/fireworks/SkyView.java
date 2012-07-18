@@ -232,8 +232,11 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 					canvas = surfaceHolder.lockCanvas(null);
 					// Lock the surfaceHolder for updating with bitmap
 					synchronized (surfaceHolder) {
-						canvas.drawBitmap(tempBitmap, 0, 0, null);
-						//canvas.drawCircle(x, screenHeight - y, 5, paint);
+						if (canvas != null) {
+							canvas.drawBitmap(tempBitmap, 0, 0, null);
+							// draw the "head" of the fireworks
+							canvas.drawCircle(particle.getCurrentX(), screenHeight - particle.getCurrentY(), 4, paint);
+						}
 					}
 				}
 				finally {
