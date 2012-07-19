@@ -3,6 +3,8 @@
  */
 package goodfellowe.pennycuff.fireworks;
 
+import java.util.Random;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -30,14 +32,13 @@ public class Rocket {
 	private float coefA, coefB;
 	private double quadA, quadB, quadC, quadTag;
 	
-	public Paint paint;
+	public Ember ember = new Ember();;
 
 	/**
 	 * 
 	 */
 	public Rocket() {
 		state = DEAD;
-		paint = null;
 	}
 	
 	public boolean defineCriticalPoints(int y0, int y2, int x1, int y1, long duration, int screenWidth, int screenHeight) {
@@ -104,6 +105,8 @@ public class Rocket {
 		this.lastUpdate = lastUpdate;
 		cutoff = lastUpdate + duration;
 		started = lastUpdate;
+		Random random = new Random();
+		ember.setEmberColor(random.nextInt(Ember.LIGHTS_TOTAL));
 	}
 	
 	public boolean isAlive() {
@@ -119,7 +122,8 @@ public class Rocket {
 			int newX = (int) tempX;
 			int newY = (int) position(tempX);
 			for (int x = lastX; x <= newX; x++) {
-				//canvas.drawLine(lastX, screenHeight - (int) position(lastX), x, screenHeight - (int) position(x), paint);
+				ember.setPosition(new Ember.Point(lastX, screenHeight - (int) position(lastX)));
+				ember.draw(canvas);
 				lastX = x;
 			}
 			lastX = newX;
@@ -127,7 +131,6 @@ public class Rocket {
 			if (time > cutoff) {
 				state = DEAD;
 			}
-			//canvas.drawCircle(x1, screenHeight - y1, 5, paint);
 		}
 	}
 	

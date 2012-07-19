@@ -176,12 +176,9 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			y = 0;
 			
 			Rocket rocket = new Rocket();
-			rocket.paint = paint;
-			rocket.paint.setARGB(255, 200, 200, 200);
 			
-			Ember ember = new Ember();
-			ember.setPosition(new Ember.Point(100, 100));
-
+			Explosion explosion = new Explosion(screenWidth / 2, screenHeight / 2, screenHeight);
+			
 			while (threadIsRunning) {
 				// Do all drawing to the tempCanvas
 				long currentTime = System.currentTimeMillis();
@@ -228,11 +225,11 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 					int x1 = (screenWidth / 4) + random.nextInt(screenWidth / 2);
 					while (!rocket.defineCriticalPoints(random.nextInt(100), y2, x1, y1, 950 + random.nextInt(1000), screenWidth, screenHeight));
 					rocket.makeAlive(previousFrameTime);
-					ember.setEmberColor(random.nextInt(100));
 				}
 				rocket.draw(tempCanvas, currentTime);
-				ember.setPosition(new Ember.Point(rocket.getCurrentX(), screenHeight - rocket.getCurrentY()));
-				ember.draw(tempCanvas);
+				
+				explosion.move();
+				explosion.draw(tempCanvas);
 				
 				try {
 					canvas = surfaceHolder.lockCanvas(null);

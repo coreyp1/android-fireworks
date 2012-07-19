@@ -23,8 +23,10 @@ public class Ember {
 	public Ember.Point current = new Ember.Point();
 	public Ember.Point previous = new Ember.Point();
 
-	static final public int LIGHT_SIZE = 10;
-	static final public int LIGHT_MASTER_SIZE = LIGHT_SIZE * 10;
+	static final public int LIGHTS_ACROSS = 10;
+	static final public int LIGHTS_TOTAL = LIGHTS_ACROSS * LIGHTS_ACROSS;
+	static final public int LIGHT_SIZE = 5;
+	static final public int LIGHT_MASTER_SIZE = LIGHT_SIZE * LIGHTS_ACROSS;
 	static final public int LIGHT_SIZE_OFFSET = LIGHT_SIZE / 2;
 	static final public float LIGHT_ALPHA = (float) .8;
 	static public Bitmap lightBitmap = Bitmap.createBitmap(LIGHT_MASTER_SIZE,
@@ -60,10 +62,10 @@ public class Ember {
 	 * @return
 	 */
 	public int setEmberColor(int newColor) {
-		if (newColor >= 0 && newColor < 100) {
+		if (newColor >= 0 && newColor < LIGHTS_TOTAL) {
 			emberColor = newColor;
-			int offsetX = LIGHT_SIZE * (newColor % 10);
-			int offsetY = LIGHT_SIZE * (newColor / 10);
+			int offsetX = LIGHT_SIZE * (newColor % LIGHTS_ACROSS);
+			int offsetY = LIGHT_SIZE * (newColor / LIGHTS_ACROSS);
 			from.set(offsetX, offsetY, offsetX + LIGHT_SIZE, offsetY + LIGHT_SIZE);
 		}
 		return emberColor;
@@ -93,7 +95,7 @@ public class Ember {
 						distance = FloatMath
 								.sqrt(((radius - innerX) * (radius - innerX))
 										+ ((radius - innerY) * (radius - innerY)));
-						lightNumber = ((i / LIGHT_SIZE) * 10)
+						lightNumber = ((i / LIGHT_SIZE) * LIGHTS_ACROSS)
 								+ (j / LIGHT_SIZE);
 						if (distance > radius) {
 							alpha = 0;
