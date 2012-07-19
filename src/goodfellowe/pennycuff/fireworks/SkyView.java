@@ -151,12 +151,14 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			Paint color = new Paint();
 			color.setARGB(255, 255, 255, 255);
 			
+			/*
 			int lastx = 0;
 			int lasty = 0;
 			int x, y;
 			int yaccel = -3;
 			int yvelocity = 50;
 			int direction = 1;
+			*/
 			final int STAR_COUNT = 40;
 			int[] starX = new int[STAR_COUNT], starY = new int[STAR_COUNT];
 			for (int i = 0; i < STAR_COUNT; i++) {
@@ -173,11 +175,11 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			paint.setARGB(255, 255, 0, 0);
 			paint.setAntiAlias(true);
 			
-			y = 0;
+			//y = 0;
 			
 			Rocket rocket = new Rocket();
 			
-			Explosion explosion = new Explosion(screenWidth / 2, screenHeight / 2, screenHeight);
+			//Explosion explosion = new Explosion(screenWidth / 2, screenHeight / 2, screenHeight);
 			
 			while (threadIsRunning) {
 				// Do all drawing to the tempCanvas
@@ -227,9 +229,6 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 					rocket.makeAlive(previousFrameTime);
 				}
 				rocket.draw(tempCanvas, currentTime);
-				
-				explosion.move();
-				explosion.draw(tempCanvas);
 				
 				try {
 					canvas = surfaceHolder.lockCanvas(null);

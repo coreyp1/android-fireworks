@@ -25,7 +25,7 @@ public class Ember {
 
 	static final public int LIGHTS_ACROSS = 10;
 	static final public int LIGHTS_TOTAL = LIGHTS_ACROSS * LIGHTS_ACROSS;
-	static final public int LIGHT_SIZE = 5;
+	static final public int LIGHT_SIZE = 10;
 	static final public int LIGHT_MASTER_SIZE = LIGHT_SIZE * LIGHTS_ACROSS;
 	static final public int LIGHT_SIZE_OFFSET = LIGHT_SIZE / 2;
 	static final public float LIGHT_ALPHA = (float) .8;

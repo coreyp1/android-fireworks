@@ -20,6 +20,7 @@ public class Rocket {
 	
 	// State variables
 	private boolean state;
+	private int stage;
 	private int lastX, lastY;
 	private int screenWidth, screenHeight;
 	
@@ -32,7 +33,12 @@ public class Rocket {
 	private float coefA, coefB;
 	private double quadA, quadB, quadC, quadTag;
 	
-	public Ember ember = new Ember();;
+	// Constants
+	final private int STAGE_ROCKET = 0;
+	final private int STAGE_EXPLOSION = 1;
+	
+	private Ember ember = new Ember();
+	private Explosion explosion;
 
 	/**
 	 * 
@@ -43,7 +49,7 @@ public class Rocket {
 	
 	public boolean defineCriticalPoints(int y0, int y2, int x1, int y1, long duration, int screenWidth, int screenHeight) {
 		lastX = 0;
-		lastY = (int)y0;
+		lastY = (int) y0;
 		
 		this.y0 = y0;
 		this.y2 = y2;
@@ -69,10 +75,6 @@ public class Rocket {
 		double third = first - second;
 		quadTag = Math.sqrt(third);
 		x2 = (float)((-quadB - quadTag) / (2 * quadA));
-		x2a = (float)((-quadB + quadTag) / (2 * quadA));
-		if (x2a < x2) {
-			//x2 = x2a;
-		}
 		coefA = (y1 - y0) / ((x1 * x1) - (2 * x2 * x1));
 		coefB = -2 * coefA * x2;
 		if (third < 0) {
@@ -107,6 +109,7 @@ public class Rocket {
 		started = lastUpdate;
 		Random random = new Random();
 		ember.setEmberColor(random.nextInt(Ember.LIGHTS_TOTAL));
+		stage = STAGE_ROCKET;
 	}
 	
 	public boolean isAlive() {
@@ -115,20 +118,33 @@ public class Rocket {
 	
 	public void draw(Canvas canvas, long time) {
 		if (state == ALIVE) {
-			float tempX = xval(time);
-			if (tempX > x1) {
-				tempX = x1;
+			if (stage == STAGE_ROCKET) {
+				float tempX = xval(time);
+				if (tempX > x1) {
+					tempX = x1;
+				}
+				int newX = (int) tempX;
+				int newY = (int) position(tempX);
+				for (int x = lastX; x <= newX; x++) {
+					ember.setPosition(new Ember.Point(lastX, screenHeight - (int) position(lastX)));
+					ember.draw(canvas);
+					lastX = x;
+				}
+				lastX = newX;
+				lastY = newY;
+				if (time > cutoff && stage == STAGE_ROCKET) {
+					stage = STAGE_EXPLOSION;
+					explosion = new Explosion(lastX, lastY, screenHeight);
+				}
 			}
-			int newX = (int) tempX;
-			int newY = (int) position(tempX);
-			for (int x = lastX; x <= newX; x++) {
-				ember.setPosition(new Ember.Point(lastX, screenHeight - (int) position(lastX)));
-				ember.draw(canvas);
-				lastX = x;
+			else if (stage == STAGE_EXPLOSION) {
+				explosion.move();
+				explosion.draw(canvas);
+				if (time > cutoff + 3000) {
+					state = DEAD;
+				}
 			}
-			lastX = newX;
-			lastY = newY;
-			if (time > cutoff) {
+			else {
 				state = DEAD;
 			}
 		}

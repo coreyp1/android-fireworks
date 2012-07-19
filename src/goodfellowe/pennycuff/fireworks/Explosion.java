@@ -22,13 +22,13 @@ public class Explosion {
 	public Explosion(int x, int y, int screenHeight) {
 		this.screenHeight = screenHeight;
 		Random random = new Random();
-		numParticles = 20;
-		particles = new Explosion.Particle[20];
+		numParticles = 100;
+		particles = new Explosion.Particle[numParticles];
 		for (int i = 0; i < numParticles; i++) {
 			particles[i] = new Explosion.Particle(x,  y, random.nextInt(Ember.LIGHTS_TOTAL), screenHeight);
 			particles[i].setGravity(0, (float) -.05);
-			particles[i].velocityX = (random.nextFloat() * 3) - (float)1.5;
-			particles[i].velocityY = (random.nextFloat() * 3) - (float)1.5;
+			particles[i].velocityX = (random.nextFloat() * 6) - (float)1.5;
+			particles[i].velocityY = (random.nextFloat() * 6) - (float)1.5;
 		}
 	}
 	
