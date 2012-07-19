@@ -178,6 +178,10 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			Particle particle = new Particle();
 			particle.paint = paint;
 			particle.paint.setARGB(255, 200, 200, 200);
+			
+			Ember ember = new Ember();
+			ember.setPosition(new Ember.Point(100, 100));
+
 			while (threadIsRunning) {
 				// Do all drawing to the tempCanvas
 				long currentTime = System.currentTimeMillis();
@@ -225,8 +229,11 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 					int x1 = (screenWidth / 4) + random.nextInt(screenWidth / 2);
 					while (!particle.defineCriticalPoints(random.nextInt(100), y2, x1, y1, 950 + random.nextInt(1000), screenWidth, screenHeight));
 					particle.makeAlive(previousFrameTime);
+					ember.setEmberColor(random.nextInt(100));
 				}
 				particle.draw(tempCanvas, currentTime);
+				ember.setPosition(new Ember.Point(particle.getCurrentX(), screenHeight - particle.getCurrentY()));
+				ember.draw(tempCanvas);
 				
 				try {
 					canvas = surfaceHolder.lockCanvas(null);
@@ -234,8 +241,6 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 					synchronized (surfaceHolder) {
 						if (canvas != null) {
 							canvas.drawBitmap(tempBitmap, 0, 0, null);
-							// draw the "head" of the fireworks
-							canvas.drawCircle(particle.getCurrentX(), screenHeight - particle.getCurrentY(), 4, paint);
 						}
 					}
 				}

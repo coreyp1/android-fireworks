@@ -119,7 +119,7 @@ public class Particle {
 			int newX = (int) tempX;
 			int newY = (int) position(tempX);
 			for (int x = lastX; x <= newX; x++) {
-				canvas.drawLine(lastX, screenHeight - (int) position(lastX), x, screenHeight - (int) position(x), paint);
+				//canvas.drawLine(lastX, screenHeight - (int) position(lastX), x, screenHeight - (int) position(x), paint);
 				lastX = x;
 			}
 			lastX = newX;
