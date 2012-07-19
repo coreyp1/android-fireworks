@@ -10,7 +10,7 @@ import android.graphics.Paint;
  * @author Corey
  *
  */
-public class Particle {
+public class Rocket {
 	// Constants
 	final public boolean ALIVE = true;
 	final public boolean DEAD = false;
@@ -35,7 +35,7 @@ public class Particle {
 	/**
 	 * 
 	 */
-	public Particle() {
+	public Rocket() {
 		state = DEAD;
 		paint = null;
 	}

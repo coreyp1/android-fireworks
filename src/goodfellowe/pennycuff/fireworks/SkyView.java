@@ -175,9 +175,9 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			
 			y = 0;
 			
-			Particle particle = new Particle();
-			particle.paint = paint;
-			particle.paint.setARGB(255, 200, 200, 200);
+			Rocket rocket = new Rocket();
+			rocket.paint = paint;
+			rocket.paint.setARGB(255, 200, 200, 200);
 			
 			Ember ember = new Ember();
 			ember.setPosition(new Ember.Point(100, 100));
@@ -185,7 +185,6 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			while (threadIsRunning) {
 				// Do all drawing to the tempCanvas
 				long currentTime = System.currentTimeMillis();
-				currentTime += 100;
 				//double elapsedTimeMS = currentTime - previousFrameTime;
 				dimCanvas(tempCanvas, currentTime);
 
@@ -223,16 +222,16 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 				*/
 				
 				// draw the particle
-				if (!particle.isAlive()) {
+				if (!rocket.isAlive()) {
 					int y1 = (screenHeight / 4) + random.nextInt(screenHeight / 2);
 					int y2 = y1 + random.nextInt(screenHeight / 4) + 1;
 					int x1 = (screenWidth / 4) + random.nextInt(screenWidth / 2);
-					while (!particle.defineCriticalPoints(random.nextInt(100), y2, x1, y1, 950 + random.nextInt(1000), screenWidth, screenHeight));
-					particle.makeAlive(previousFrameTime);
+					while (!rocket.defineCriticalPoints(random.nextInt(100), y2, x1, y1, 950 + random.nextInt(1000), screenWidth, screenHeight));
+					rocket.makeAlive(previousFrameTime);
 					ember.setEmberColor(random.nextInt(100));
 				}
-				particle.draw(tempCanvas, currentTime);
-				ember.setPosition(new Ember.Point(particle.getCurrentX(), screenHeight - particle.getCurrentY()));
+				rocket.draw(tempCanvas, currentTime);
+				ember.setPosition(new Ember.Point(rocket.getCurrentX(), screenHeight - rocket.getCurrentY()));
 				ember.draw(tempCanvas);
 				
 				try {

@@ -23,9 +23,10 @@ public class Ember {
 	public Ember.Point current = new Ember.Point();
 	public Ember.Point previous = new Ember.Point();
 
-	static final public int LIGHT_SIZE = 15;
+	static final public int LIGHT_SIZE = 10;
 	static final public int LIGHT_MASTER_SIZE = LIGHT_SIZE * 10;
 	static final public int LIGHT_SIZE_OFFSET = LIGHT_SIZE / 2;
+	static final public float LIGHT_ALPHA = (float) .8;
 	static public Bitmap lightBitmap = Bitmap.createBitmap(LIGHT_MASTER_SIZE,
 			LIGHT_MASTER_SIZE, Bitmap.Config.ARGB_8888);
 	static public Canvas lightCanvas = new Canvas(lightBitmap);
@@ -81,7 +82,7 @@ public class Ember {
 				float radius;
 				float distance;
 				int alpha;
-				float[] hsv = { 0, 1, (float) .6 };
+				float[] hsv = {0, 1, LIGHT_ALPHA};
 
 				// Loop through the image and create the lights pixel by pixel;
 				radius = LIGHT_SIZE / 2;
@@ -119,6 +120,9 @@ public class Ember {
 		int fromY = current.y - LIGHT_SIZE_OFFSET;
 		to.set(fromX, fromY, fromX + LIGHT_SIZE, fromY + LIGHT_SIZE);
 		canvas.drawBitmap(lightBitmap, from, to, paint);
+		//Paint paint2 = new Paint();
+		//paint2.setARGB(255, 255, 255, 255);
+		//canvas.drawBitmap(lightBitmap, new Rect(0, 0, LIGHT_MASTER_SIZE, LIGHT_MASTER_SIZE), new Rect(0, 0, LIGHT_MASTER_SIZE, LIGHT_MASTER_SIZE), paint2);
 	}
 	
 	/**
