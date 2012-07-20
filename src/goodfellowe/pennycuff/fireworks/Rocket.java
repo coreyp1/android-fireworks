@@ -14,9 +14,9 @@ import android.graphics.Paint;
  */
 public class Rocket {
 	// Constants
-	final public boolean ALIVE = true;
-	final public boolean DEAD = false;
-	final public int GRAVITY = 3;
+	static final public boolean ALIVE = true;
+	static final public boolean DEAD = false;
+	static final public int GRAVITY = 3;
 	
 	// State variables
 	private boolean state;
@@ -116,10 +116,10 @@ public class Rocket {
 		return state;
 	}
 	
-	public void draw(Canvas canvas, long time) {
+	public void draw(Canvas canvas, long currentTime) {
 		if (state == ALIVE) {
 			if (stage == STAGE_ROCKET) {
-				float tempX = xval(time);
+				float tempX = xval(currentTime);
 				if (tempX > x1) {
 					tempX = x1;
 				}
@@ -132,15 +132,17 @@ public class Rocket {
 				}
 				lastX = newX;
 				lastY = newY;
-				if (time > cutoff && stage == STAGE_ROCKET) {
+				if (currentTime > cutoff && stage == STAGE_ROCKET) {
 					stage = STAGE_EXPLOSION;
 					explosion = new Explosion(lastX, lastY, screenHeight);
+					explosion.makeAlive(currentTime);
 				}
 			}
 			else if (stage == STAGE_EXPLOSION) {
-				explosion.move();
-				explosion.draw(canvas);
-				if (time > cutoff + 3000) {
+				boolean isAlive = false;
+				explosion.move(currentTime);
+				isAlive = explosion.draw(canvas, currentTime);
+				if (!isAlive) {
 					state = DEAD;
 				}
 			}

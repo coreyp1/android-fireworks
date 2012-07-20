@@ -23,7 +23,10 @@ public class Ember {
 	public Ember.Point current = new Ember.Point();
 	public Ember.Point previous = new Ember.Point();
 
-	static final public int LIGHTS_ACROSS = 10;
+	// Constants
+	static final public boolean ALIVE = true;
+	static final public boolean DEAD = false;
+	static final public int LIGHTS_ACROSS = 20;
 	static final public int LIGHTS_TOTAL = LIGHTS_ACROSS * LIGHTS_ACROSS;
 	static final public int LIGHT_SIZE = 10;
 	static final public int LIGHT_MASTER_SIZE = LIGHT_SIZE * LIGHTS_ACROSS;
@@ -101,9 +104,8 @@ public class Ember {
 							alpha = 0;
 						} else {
 							alpha = (int) (Math.cos((distance / radius) * (Math.PI / 2)) * 255);
-							//alpha = (int) ((radius - distance) / radius) * 255;
 						}
-						hsv[0] = (float) (lightNumber * 3.59);
+						hsv[0] = (float) (lightNumber * 359 / LIGHTS_TOTAL);
 						paint.setColor(Color.HSVToColor(alpha, hsv));
 						lightCanvas.drawPoint(i, j, paint);
 					}
@@ -113,8 +115,9 @@ public class Ember {
 	}
 
 	/**
-	 * Draw the Ember.
+	 * Draw the Ember regardless of time.
 	 * @param canvas
+	 * @return
 	 */
 	public void draw(Canvas canvas) {
 		paint.setARGB(random.nextInt(256), 255, 255, 255);
@@ -122,9 +125,6 @@ public class Ember {
 		int fromY = current.y - LIGHT_SIZE_OFFSET;
 		to.set(fromX, fromY, fromX + LIGHT_SIZE, fromY + LIGHT_SIZE);
 		canvas.drawBitmap(lightBitmap, from, to, paint);
-		//Paint paint2 = new Paint();
-		//paint2.setARGB(255, 255, 255, 255);
-		//canvas.drawBitmap(lightBitmap, new Rect(0, 0, LIGHT_MASTER_SIZE, LIGHT_MASTER_SIZE), new Rect(0, 0, LIGHT_MASTER_SIZE, LIGHT_MASTER_SIZE), paint2);
 	}
 	
 	/**
