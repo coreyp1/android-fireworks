@@ -25,6 +25,8 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 	private int screenHeight; // height of the screen
 	
 	private long lastDim; // Track the time that the screen was last dimmed;
+	private double gravityX = 0;
+	private double gravityY = -2;
 
 	// Paint variables
 	private Paint dimmingPaint; // Paint used to clear the drawing area
@@ -108,6 +110,12 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			} catch (InterruptedException e) {
 			}
 		}
+	}
+	
+	// Update the Gravity
+	public void updateGravity(double newGravityX, double newGravityY) {
+		gravityX = newGravityX;
+		gravityY = newGravityY;
 	}
 
 	// draws the game to the given Canvas
@@ -228,7 +236,7 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 					while (!rocket.defineCriticalPoints(random.nextInt(100), y2, x1, y1, 950 + random.nextInt(1000), screenWidth, screenHeight));
 					rocket.makeAlive(previousFrameTime);
 				}
-				rocket.draw(tempCanvas, currentTime);
+				rocket.draw(tempCanvas, currentTime, gravityX, gravityY);
 				
 				try {
 					canvas = surfaceHolder.lockCanvas(null);

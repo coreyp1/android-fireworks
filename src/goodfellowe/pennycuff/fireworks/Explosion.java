@@ -42,9 +42,9 @@ public class Explosion {
 		return isAlive;
 	}
 	
-	public void move(long currentTime) {
+	public void move(long currentTime, double gravityX, double gravityY) {
 		for(Explosion.Particle particle : particles) {
-			particle.move(currentTime);
+			particle.move(currentTime, gravityX, gravityY);
 		}
 	}
 	
@@ -68,8 +68,6 @@ public class Explosion {
 		public double currentY;
 		public double previousX;
 		public double previousY;
-		public double gravityX;
-		public double gravityY;
 		public double velocityX;
 		public double velocityY;
 		
@@ -97,14 +95,6 @@ public class Explosion {
 		}
 		
 		/**
-		 * Set the Gravity
-		 */
-		public void setGravity(double newGravityX, double newGravityY) {
-			gravityX = newGravityX;
-			gravityY = newGravityY;
-		}
-		
-		/**
 		 * Draw the ember
 		 */
 		public boolean draw(Canvas canvas, long currentTime) {
@@ -119,7 +109,7 @@ public class Explosion {
 		/**
 		 * Move the ember
 		 */
-		public void move(long currentTime) {
+		public void move(long currentTime, double gravityX, double gravityY) {
 			// Only go as far as the time limit
 			if (currentTime > endTime) {
 				currentTime = endTime;

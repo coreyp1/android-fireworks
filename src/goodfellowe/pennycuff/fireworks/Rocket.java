@@ -9,7 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 /**
- * @author Corey
+ * @author Corey Pennycuff and Rob Goodfellowe
  *
  */
 public class Rocket {
@@ -116,7 +116,7 @@ public class Rocket {
 		return state;
 	}
 	
-	public void draw(Canvas canvas, long currentTime) {
+	public void draw(Canvas canvas, long currentTime, double gravityX, double gravityY) {
 		if (state == ALIVE) {
 			if (stage == STAGE_ROCKET) {
 				float tempX = xval(currentTime);
@@ -178,7 +178,7 @@ public class Rocket {
 			}
 			else if (stage == STAGE_EXPLOSION) {
 				boolean isAlive = false;
-				explosion.move(currentTime);
+				explosion.move(currentTime, gravityX, gravityY);
 				isAlive = explosion.draw(canvas, currentTime);
 				if (!isAlive) {
 					state = DEAD;
