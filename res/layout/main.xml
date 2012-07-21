@@ -1,86 +1,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayout1"
+    android:id="@+id/RelativeLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#00FFFFFF" >
-  
+
     <goodfellowe.pennycuff.fireworks.SkyView
         android:id="@+id/skyView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_span="2"
         android:layout_weight="1" />
-    <TableRow
-        android:id="@+id/tableRow0"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+
+    <Button
+        android:id="@+id/spangled"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_weight="1"
+        android:background="#00FFFFFF"
+        android:text=""
+        android:textColor="#00FFFFFF"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/washington"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_weight="1"
+        android:background="#00FFFFFF"
+        android:text=""
+        android:textColor="#00FFFFFF"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/thunderer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1"
+        android:background="#00FFFFFF"
+        android:text=""
+        android:textColor="#00FFFFFF"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/stripes"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_weight="1"
-        android:background="#00FFFFFF" >
-
-        <Button
-            android:id="@+id/stripes"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#FFFFFFFF"
-            android:text="Stars and Stripes"
-            android:textColor="#00FFFFFF"
-            android:textSize="20dp" />
-
-        <Button
-            android:id="@+id/spangled"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#FFFFFFFF"
-            android:text="Star Spangled Banner"
-            android:textColor="#00FFFFFF"
-            android:textSize="20dp" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignLeft="@+id/tableRow0"
-        android:layout_below="@+id/tableRow0"
-        android:layout_weight="1"
-        android:background="#00FFFFFF" >
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tableRow0"
-        android:layout_below="@+id/tableRow1"
-        android:layout_gravity="bottom"
-        android:layout_weight="1" >
-
-        <Button
-            android:id="@+id/washington"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00FFFFFF"
-            android:text="Washington Post"
-            android:textColor="#FFFFFFFF"
-            android:textSize="20dp" />
-
-        <Button
-            android:id="@+id/thunderer"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#FFFFFFFF"
-            android:text="Thunderer"
-            android:textColor="#00FFFFFF"
-            android:textSize="20dp" />
-    </TableRow>
-
-
+        android:background="#00FFFFFF"
+        android:text=""
+        android:textColor="#00FFFFFF"
+        android:textSize="20dp" />
 
 </RelativeLayout>
