@@ -25,7 +25,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         
         skyView = (SkyView) findViewById(R.id.skyView);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        useGravity = false;
+        useGravity = true;
     }
 
     @Override
