@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -26,6 +27,9 @@ public class MainActivity extends Activity implements SensorEventListener {
         skyView = (SkyView) findViewById(R.id.skyView);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         useGravity = true;
+
+        // Allow volume keys to set sound volume
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
     @Override

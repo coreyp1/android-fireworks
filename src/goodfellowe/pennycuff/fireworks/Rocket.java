@@ -7,6 +7,7 @@ import java.util.Random;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 /**
  * @author Corey Pennycuff and Rob Goodfellowe
