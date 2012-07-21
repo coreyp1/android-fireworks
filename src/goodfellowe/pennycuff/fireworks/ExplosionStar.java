@@ -2,9 +2,9 @@ package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
-public class Star extends Explosion {
+public class ExplosionStar extends Explosion {
 
-	public Star(int x, int y, int screenHeight) {
+	public ExplosionStar(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);
 		
 

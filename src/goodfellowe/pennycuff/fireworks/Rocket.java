@@ -133,10 +133,22 @@ public class Rocket {
 				lastX = newX;
 				lastY = newY;
 				if (currentTime > cutoff && stage == STAGE_ROCKET) {
+					Random random = new Random();
 					stage = STAGE_EXPLOSION;
-					explosion = new Explosion(lastX, lastY, screenHeight);
-					//explosion = (Explosion) new Circle(lastX, lastY, screenHeight);
-					explosion = (Explosion) new Star(lastX, lastY, screenHeight);
+					switch (random.nextInt(4)) {
+					case 0:
+						explosion = new ExplosionRandom(lastX, lastY, screenHeight);
+						break;
+					case 1:
+						explosion = (Explosion) new ExplosionCircle(lastX, lastY, screenHeight);
+						break;
+					case 2:
+						explosion = (Explosion) new ExplosionTopHalf(lastX, lastY, screenHeight);
+						break;
+					case 3:
+						explosion = (Explosion) new ExplosionStar(lastX, lastY, screenHeight);
+						break;
+					}
 					explosion.makeAlive(currentTime);
 				}
 			}

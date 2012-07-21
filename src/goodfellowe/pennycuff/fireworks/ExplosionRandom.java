@@ -1,41 +1,34 @@
+/**
+ * 
+ */
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
-public class TopHalf extends Explosion {
+/**
+ * @author Corey Pennycuff and Rob Goodfellowe
+ *
+ */
+public class ExplosionRandom extends Explosion {
 
-	public TopHalf(int x, int y, int screenHeight) {
+	/**
+	 * @param x
+	 * @param y
+	 * @param screenHeight
+	 */
+	public ExplosionRandom(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);
-
-
 		Random random = new Random();
-		numParticles = 100;
+		numParticles = 75;
 		particles = new Explosion.Particle[numParticles];
-		int radius;
-		double maxRadius = 10;
+		int radius = 5;
 		double radians;
-		double angle;
-		double velX;
-		double velY;
-		double scaleFactor;
-				
 		for (int i = 0; i < numParticles; i++) {
-			angle = random.nextDouble() * 360;
-			radians = (angle * Math.PI) / 180;
-			if (angle > 180){
-				radius = 1;
-				
-				
-			}
-			else {
-				radius = 10;
-			}
+			radians = random.nextDouble() * 2 * Math.PI;
 			particles[i] = new Explosion.Particle(x,  y, random.nextInt(Ember.LIGHTS_TOTAL), screenHeight);
-			particles[i].setGravity(0, -.5);
+			particles[i].setGravity(0, -2);
 			particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();
 			particles[i].velocityY = Math.sin(radians) * radius * random.nextDouble();
-		
-			}
+		}
 	}
-
 }

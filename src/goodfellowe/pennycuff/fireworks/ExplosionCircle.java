@@ -2,9 +2,9 @@ package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
-public class Circle extends Explosion {
+public class ExplosionCircle extends Explosion {
 
-	public Circle (int x, int y, int screenHeight){
+	public ExplosionCircle (int x, int y, int screenHeight){
 		super(x, y, screenHeight);
 		
 		Random random = new Random();
