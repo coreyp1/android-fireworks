@@ -61,7 +61,6 @@ public class ExplosionVertLine extends Explosion {
 			
 			//radians = random.nextDouble() * 2 * Math.PI;
 			particles[i] = new Explosion.Particle(x,  y, 100, screenHeight);
-			particles[i].setGravity(0, -.5);
 			//particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();
 			//particles[i].velocityY = Math.sin(radians) * radius * random.nextDouble();
 			particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();

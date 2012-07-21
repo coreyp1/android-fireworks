@@ -16,6 +16,7 @@ public class Explosion {
 	protected int numParticles;
 	private int screenHeight;
 	private Random random = new Random();
+	protected long sleep;
 
 	// Constants
 	static final public boolean ALIVE = true;
@@ -30,6 +31,7 @@ public class Explosion {
 	public Explosion(int x, int y, int screenHeight) {
 		this.screenHeight = screenHeight;
 		particles = new Explosion.Particle[0];
+		sleep = 0;
 	}
 	
 	public boolean draw(Canvas canvas, long currentTime) {
@@ -42,16 +44,16 @@ public class Explosion {
 		return isAlive;
 	}
 	
-	public void move(long currentTime) {
+	public void move(long currentTime, double gravityX, double gravityY) {
 		for(Explosion.Particle particle : particles) {
-			particle.move(currentTime);
+			particle.move(currentTime, gravityX, gravityY);
 		}
 	}
 	
 	public void makeAlive(long startTime) {
 		state = ALIVE;
 		for (Explosion.Particle particle : particles) {
-			particle.makeAlive(startTime, random.nextInt(6000) + 1000);
+			particle.makeAlive(startTime + sleep, random.nextInt(6000) + 1000);
 		}
 	}
 	
@@ -68,14 +70,13 @@ public class Explosion {
 		public double currentY;
 		public double previousX;
 		public double previousY;
-		public double gravityX;
-		public double gravityY;
 		public double velocityX;
 		public double velocityY;
 		
 		private int screenHeight;
 		private boolean state;
 		private long previousUpdate;
+		private long startTime;
 		private long endTime;
 		
 		int count = 0;
@@ -97,21 +98,16 @@ public class Explosion {
 		}
 		
 		/**
-		 * Set the Gravity
-		 */
-		public void setGravity(double newGravityX, double newGravityY) {
-			gravityX = newGravityX;
-			gravityY = newGravityY;
-		}
-		
-		/**
 		 * Draw the ember
 		 */
 		public boolean draw(Canvas canvas, long currentTime) {
-			ember.setPosition(new Ember.Point((int)currentX, screenHeight - (int)currentY));
-			ember.draw(canvas);
-			if (currentTime >= endTime) {
-				state = DEAD;
+			if (currentTime >= startTime) {
+				ember.setPosition(new Ember.Point((int) currentX, screenHeight
+						- (int) currentY));
+				ember.draw(canvas);
+				if (currentTime >= endTime) {
+					state = DEAD;
+				}
 			}
 			return state;
 		}
@@ -119,23 +115,31 @@ public class Explosion {
 		/**
 		 * Move the ember
 		 */
-		public void move(long currentTime) {
-			// Only go as far as the time limit
-			if (currentTime > endTime) {
-				currentTime = endTime;
+		public void move(long currentTime, double gravityX, double gravityY) {
+			// Only move the particle if it is done sleeping
+			if (currentTime > startTime) {
+				// Only go as far as the time limit
+				if (currentTime > endTime) {
+					currentTime = endTime;
+				}
+				
+				// Only allow movement since the startTime
+				if (previousUpdate < startTime) {
+					previousUpdate = startTime;
+				}
+	
+				// Store the previous values
+				previousX = currentX;
+				previousY = currentY;
+				
+				// Adjust the velocity
+				velocityX += (gravityX * ((double)(currentTime - previousUpdate) / 1000));
+				velocityY += (gravityY * ((double)(currentTime - previousUpdate) / 1000));
+				
+				// Move the particle
+				currentX += velocityX;
+				currentY += velocityY;
 			}
-
-			// Store the previous values
-			previousX = currentX;
-			previousY = currentY;
-			
-			// Adjust the velocity
-			velocityX += (gravityX * ((double)(currentTime - previousUpdate) / 1000));
-			velocityY += (gravityY * ((double)(currentTime - previousUpdate) / 1000));
-			
-			// Move the particle
-			currentX += velocityX;
-			currentY += velocityY;
 			
 			previousUpdate = currentTime;
 		}
@@ -143,7 +147,8 @@ public class Explosion {
 		public void makeAlive(long startTime, long lifeLength) {
 			state = ALIVE;
 			previousUpdate = startTime;
-			endTime = startTime + lifeLength;
+			this.startTime = startTime;
+			endTime = this.startTime + lifeLength;
 		}
 		
 		public boolean isAlive() {

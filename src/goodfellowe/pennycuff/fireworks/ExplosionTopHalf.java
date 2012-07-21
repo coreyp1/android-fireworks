@@ -31,7 +31,6 @@ public class ExplosionTopHalf extends Explosion {
 				radius = 10;
 			}
 			particles[i] = new Explosion.Particle(x,  y, random.nextInt(Ember.LIGHTS_TOTAL), screenHeight);
-			particles[i].setGravity(0, -.5);
 			particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();
 			particles[i].velocityY = Math.sin(radians) * radius * random.nextDouble();
 		
