@@ -12,35 +12,49 @@ public class ExplosionStar extends Explosion {
 		numParticles = 100;
 		particles = new Explosion.Particle[numParticles];
 		double radius;
-		double maxRadius = .1;
+		double maxRadius = .0001;
 		double radians;
 		double angle;
 		double velX;
 		double velY;
 		double scaleFactor;
+		double differenceMagnitude = 16;
 		
 				
 		for (int i = 0; i < numParticles; i++) {
 			angle = random.nextDouble() * 360;
 			radians = (angle * Math.PI) / 180;
 			if (angle <= 45){
-				scaleFactor = 1/(angle/360);
+				scaleFactor = Math.pow(1+Math.cos(radians), differenceMagnitude);
 				radius = scaleFactor * maxRadius;	
 			}
 			else if (angle > 45 && angle <= 90){
-				scaleFactor = (angle/360);
+				scaleFactor = Math.pow(1+Math.sin(radians), differenceMagnitude);
 				radius = scaleFactor * maxRadius;	
 			}
 			else if (angle > 90 && angle <= 135){
-				scaleFactor = 1/(angle/360);
+				scaleFactor = Math.pow(1+Math.sin(radians), differenceMagnitude);
 				radius = scaleFactor * maxRadius;	
 			}
-			else if (angle > 135 && angle < 180){
-				scaleFactor = (angle/360);
+			else if (angle > 135 && angle <= 180){
+				scaleFactor = Math.pow(1+(-Math.cos(radians)), differenceMagnitude);
+				radius = scaleFactor * maxRadius;	
+			}
+			else if (angle > 180 && angle <= 225){
+				scaleFactor = Math.pow(1+(-Math.cos(radians)), differenceMagnitude);
+				radius = scaleFactor * maxRadius;	
+			}
+			else if (angle > 225 && angle <= 270){
+				scaleFactor = Math.pow(1+(-Math.sin(radians)), differenceMagnitude);
+				radius = scaleFactor * maxRadius;	
+			}
+			else if (angle > 270 && angle <= 315){
+				scaleFactor = Math.pow(1+(-Math.sin(radians)), differenceMagnitude);
 				radius = scaleFactor * maxRadius;	
 			}
 			else {
-				radius = maxRadius;
+				scaleFactor = Math.pow(1+Math.cos(radians), differenceMagnitude);
+				radius = scaleFactor * maxRadius;	
 			}
 			
 			
