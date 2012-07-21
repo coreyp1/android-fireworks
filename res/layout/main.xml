@@ -1,14 +1,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFFFF" >
+    android:id="@+id/RelativeLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#00FFFFFF" >
 
     <goodfellowe.pennycuff.fireworks.SkyView
         android:id="@+id/skyView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_span="2"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/spangled"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_weight="1"
+        android:background="#00FFFFFF"
+        android:text=""
+        android:textColor="#00FFFFFF"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/washington"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_weight="1"
+        android:background="#00FFFFFF"
+        android:text=""
+        android:textColor="#00FFFFFF"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/thunderer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1"
+        android:background="#00FFFFFF"
+        android:text=""
+        android:textColor="#00FFFFFF"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/stripes"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1"
+        android:background="#00FFFFFF"
+        android:text=""
+        android:textColor="#00FFFFFF"
+        android:textSize="20dp" />
 
 </RelativeLayout>
