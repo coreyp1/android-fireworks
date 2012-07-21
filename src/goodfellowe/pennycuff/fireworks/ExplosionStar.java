@@ -12,13 +12,13 @@ public class ExplosionStar extends Explosion {
 		numParticles = 100;
 		particles = new Explosion.Particle[numParticles];
 		double radius;
-		double maxRadius = .0001;
+		double maxRadius = .000001;
 		double radians;
 		double angle;
 		double velX;
 		double velY;
 		double scaleFactor;
-		double differenceMagnitude = 16;
+		double differenceMagnitude = 23;
 		
 				
 		for (int i = 0; i < numParticles; i++) {
