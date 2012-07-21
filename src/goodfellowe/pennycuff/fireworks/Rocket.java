@@ -135,6 +135,8 @@ public class Rocket {
 				if (currentTime > cutoff && stage == STAGE_ROCKET) {
 					stage = STAGE_EXPLOSION;
 					explosion = new Explosion(lastX, lastY, screenHeight);
+					//explosion = (Explosion) new Circle(lastX, lastY, screenHeight);
+					explosion = (Explosion) new Star(lastX, lastY, screenHeight);
 					explosion.makeAlive(currentTime);
 				}
 			}
