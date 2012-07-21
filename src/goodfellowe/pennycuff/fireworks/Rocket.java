@@ -16,7 +16,7 @@ public class Rocket {
 	// Constants
 	static final public boolean ALIVE = true;
 	static final public boolean DEAD = false;
-	static final public int GRAVITY = 3;
+	static final public int GRAVITY = 0;
 	
 	// State variables
 	private boolean state;
@@ -135,7 +135,7 @@ public class Rocket {
 				if (currentTime > cutoff && stage == STAGE_ROCKET) {
 					Random random = new Random();
 					stage = STAGE_EXPLOSION;
-					switch (random.nextInt(7)) {
+					switch (random.nextInt(11)) {
 					case 0:
 						explosion = new ExplosionRandom(lastX, lastY, screenHeight);
 						break;
@@ -146,7 +146,7 @@ public class Rocket {
 						explosion = (Explosion) new ExplosionTopHalf(lastX, lastY, screenHeight);
 						break;
 					case 3:
-					explosion = (Explosion) new ExplosionStar(lastX, lastY, screenHeight);
+					explosion = (Explosion) new ExplosionDiamond(lastX, lastY, screenHeight);
 						break;
 					case 4:
 					explosion = (Explosion) new ExplosionTriangle(lastX, lastY, screenHeight);
@@ -157,6 +157,21 @@ public class Rocket {
 					case 6:
 					explosion = (Explosion) new ExplosionHorLine(lastX, lastY, screenHeight);
 						break;
+					case 7:
+						explosion = (Explosion) new ExplosionStar(lastX, lastY, screenHeight);
+						break;
+					case 8:
+						explosion = (Explosion) new ExplosionStar(lastX, lastY, screenHeight);
+						break;
+					case 9:
+						explosion = (Explosion) new ExplosionStar(lastX, lastY, screenHeight);
+						break;
+					case 10:
+						explosion = (Explosion) new ExplosionStar(lastX, lastY, screenHeight);
+						break;
+					//case 11:
+					//explosion = (Explosion) new ExplosionRing(lastX, lastY, screenHeight);
+					//break;
 					}
 					explosion.makeAlive(currentTime);
 				}
