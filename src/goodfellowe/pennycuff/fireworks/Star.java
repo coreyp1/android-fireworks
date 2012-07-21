@@ -11,25 +11,38 @@ public class Star extends Explosion {
 		Random random = new Random();
 		numParticles = 100;
 		particles = new Explosion.Particle[numParticles];
-		int radius;
-		double maxRadius = 1;
+		double radius;
+		double maxRadius = .1;
 		double radians;
 		double angle;
 		double velX;
 		double velY;
 		double scaleFactor;
+		
 				
 		for (int i = 0; i < numParticles; i++) {
 			angle = random.nextDouble() * 360;
 			radians = (angle * Math.PI) / 180;
-			if (angle < 360){
+			if (angle <= 45){
 				scaleFactor = 1/(angle/360);
-				radius = (int) scaleFactor * (int) maxRadius;
-				
+				radius = scaleFactor * maxRadius;	
+			}
+			else if (angle > 45 && angle <= 90){
+				scaleFactor = (angle/360);
+				radius = scaleFactor * maxRadius;	
+			}
+			else if (angle > 90 && angle <= 135){
+				scaleFactor = 1/(angle/360);
+				radius = scaleFactor * maxRadius;	
+			}
+			else if (angle > 135 && angle < 180){
+				scaleFactor = (angle/360);
+				radius = scaleFactor * maxRadius;	
 			}
 			else {
-				radius = 10;
+				radius = maxRadius;
 			}
+			
 			
 			
 			//radians = random.nextDouble() * 2 * Math.PI;
