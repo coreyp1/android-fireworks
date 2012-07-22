@@ -45,7 +45,8 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 	private Set<Rocket> rockets = new HashSet<Rocket>();
 	private Set<Rocket> rocketsToBeRemoved = new HashSet<Rocket>();
 	private GestureDetector gestureDetector; // listens for double taps
-
+	private MainActivity activity;
+	
 	private Paint dimmingPaint; // Paint used to clear the drawing area
 	private Random random = new Random();
 
@@ -80,6 +81,7 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 	 * Setup the View
 	 */
 	private void setup() {
+		activity = null;
 		// Register SurfaceHolder.Callback listener
 		getHolder().addCallback(this);
 
@@ -93,6 +95,9 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 		// Initialize the GestureDetector
 		gestureDetector = new GestureDetector(this.getContext(),
 				gestureListener);
+	}
+	public void setActivity(MainActivity activity) {
+		this.activity = activity;
 	}
 
 	/**
@@ -164,7 +169,7 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 		@Override
 		public boolean onSingleTapConfirmed(MotionEvent e) {
 			// Make a new Rocket
-			Rocket rocket = new Rocket();
+			Rocket rocket = new Rocket(activity);
 			int y1 = screenHeight - (int) e.getY();
 			int y2 = y1 + random.nextInt(screenHeight / 8) + 1;
 			int x1 = (int) e.getX();
@@ -255,7 +260,7 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 					// Only add a rocket ever so often
 					if (lastRocketAdd + ROCKET_ADD_INTERVAL < currentTime) {
 						lastRocketAdd = currentTime;
-						Rocket rocket = new Rocket();
+						Rocket rocket = new Rocket(activity);
 						int y1 = (screenHeight / 4)
 								+ random.nextInt(screenHeight / 2);
 						int y2 = y1 + random.nextInt(screenHeight / 4) + 1;

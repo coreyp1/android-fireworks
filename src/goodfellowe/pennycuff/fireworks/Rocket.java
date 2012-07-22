@@ -5,9 +5,14 @@ package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.util.Log;
+import android.media.MediaPlayer;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 /**
  * @author Corey Pennycuff and Rob Goodfellowe
@@ -37,6 +42,7 @@ public class Rocket {
 	// Constants
 	final private int STAGE_ROCKET = 0;
 	final private int STAGE_EXPLOSION = 1;
+	private MainActivity activity;
 	
 	private Ember ember = new Ember();
 	private Explosion explosion;
@@ -44,8 +50,9 @@ public class Rocket {
 	/**
 	 * 
 	 */
-	public Rocket() {
+	public Rocket(MainActivity activity) {
 		state = DEAD;
+		this.activity = activity;
 	}
 	
 	public boolean defineCriticalPoints(int y0, int y2, int x1, int y1, long duration, int screenWidth, int screenHeight) {
@@ -111,7 +118,7 @@ public class Rocket {
 		Random random = new Random();
 		ember.setEmberColor(random.nextInt(Ember.LIGHTS_TOTAL));
 		stage = STAGE_ROCKET;
-		
+		activity.playSound(2);
 	}
 	
 	public boolean isAlive() {
@@ -175,6 +182,7 @@ public class Rocket {
 					//explosion = (Explosion) new ExplosionRing(lastX, lastY, screenHeight);
 					//break;
 					}
+					explosion.setActivity(activity);
 					explosion.makeAlive(currentTime);
 				}
 			}
