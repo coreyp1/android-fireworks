@@ -7,7 +7,7 @@ public class ExplosionStar extends Explosion {
 	public ExplosionStar(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);
 		Random random = new Random();
-		numParticles = 350;
+		numParticles = 225;
 		particles = new Explosion.Particle[numParticles];
 		double radius;
 		double maxRadius = 2.5;
