@@ -14,6 +14,8 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MenuInflater;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
 import android.support.v4.app.NavUtils;
@@ -124,7 +126,16 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu);
+        MenuItem item = menu.add("Painting");
+        		//item.setIcon(R.drawable.ic_launcher);
+        		item = menu.add("Photos");
+        		//item.setIcon(R.drawable.ic_action_search);
+    	//getMenuInflater().inflate(R.menu.main, menu);
+        		SubMenu subScience = menu.addSubMenu(R.string.hello_world);
+        		subScience.setIcon(R.drawable.ic_launcher);
+        		MenuInflater inflater = new MenuInflater(this);
+        		inflater.inflate(R.menu.main, subScience);
         return true;
     }
 

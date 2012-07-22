@@ -111,6 +111,7 @@ public class Rocket {
 		Random random = new Random();
 		ember.setEmberColor(random.nextInt(Ember.LIGHTS_TOTAL));
 		stage = STAGE_ROCKET;
+		
 	}
 	
 	public boolean isAlive() {

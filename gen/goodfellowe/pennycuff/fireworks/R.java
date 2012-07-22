@@ -35,10 +35,12 @@ public final class R {
         public static final int main=0x7f080000;
     }
     public static final class raw {
-        public static final int stars_and_stripes_forever=0x7f040000;
-        public static final int the_star_spangled_banner=0x7f040001;
-        public static final int thunderer=0x7f040002;
-        public static final int washington_post=0x7f040003;
+        public static final int explosion=0x7f040000;
+        public static final int rocket=0x7f040001;
+        public static final int stars_and_stripes_forever=0x7f040002;
+        public static final int the_star_spangled_banner=0x7f040003;
+        public static final int thunderer=0x7f040004;
+        public static final int washington_post=0x7f040005;
     }
     public static final class string {
         public static final int app_name=0x7f060000;
