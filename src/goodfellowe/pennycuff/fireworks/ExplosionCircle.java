@@ -8,7 +8,7 @@ public class ExplosionCircle extends Explosion {
 		super(x, y, screenHeight);
 		
 		Random random = new Random();
-		numParticles = 100;
+		numParticles = 75;
 		particles = new Explosion.Particle[numParticles];
 		int radius = 5;
 		double radians;
