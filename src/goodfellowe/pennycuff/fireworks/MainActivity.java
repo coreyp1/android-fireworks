@@ -1,7 +1,10 @@
 package goodfellowe.pennycuff.fireworks;
 
+import java.util.HashMap;
+
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.hardware.Sensor;
@@ -11,21 +14,41 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MenuInflater;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
 import android.support.v4.app.NavUtils;
 import android.view.View.OnClickListener;
-import android.media.AudioManager;
-
 
 public class MainActivity extends Activity implements SensorEventListener {
 	SkyView skyView = null;
 	SensorManager sensorManager;
 	boolean useGravity;
+	
+	public static final int SOUND_EXPLOSION = 1;
+	public static final int SOUND_ROCKET = 2;
+		
+	static SoundPool soundPool;
+    static HashMap<Integer, Integer> soundPoolMap;
+    
+    private void initSounds() {
+    	soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
+    	soundPoolMap = new HashMap<Integer, Integer>();
+    	soundPoolMap.put(SOUND_EXPLOSION, soundPool.load(this, R.raw.explosion, 1));
+    	soundPoolMap.put(SOUND_ROCKET, soundPool.load(this, R.raw.rocket, 1));
 
+    }
+    public void playSound(int sound) {
+    	AudioManager mgr = (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
+    	int streamVolume = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
+    	soundPool.play(soundPoolMap.get(sound), streamVolume, streamVolume, 1, 0, 1f);
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +58,9 @@ public class MainActivity extends Activity implements SensorEventListener {
         final MediaPlayer spangledMp = MediaPlayer.create(this,  R.raw.the_star_spangled_banner);
         final MediaPlayer thundererMp = MediaPlayer.create(this,  R.raw.thunderer);
         final MediaPlayer washingtonMp = MediaPlayer.create(this,  R.raw.washington_post);
-                        
+        
+        initSounds();
+        
         Button stripesPlayerButton = (Button) this.findViewById(R.id.stripes);
         stripesPlayerButton.setVisibility(0);
         //stripesPlayerButton.setBackgroundColor(Color.TRANSPARENT);        
@@ -101,6 +126,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         });
         
         skyView = (SkyView) findViewById(R.id.skyView);
+        skyView.setActivity(this);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         useGravity = true;
 
@@ -124,7 +150,16 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu);
+        MenuItem item = menu.add("Painting");
+        		//item.setIcon(R.drawable.ic_launcher);
+        		item = menu.add("Photos");
+        		//item.setIcon(R.drawable.ic_action_search);
+    	//getMenuInflater().inflate(R.menu.main, menu);
+        		SubMenu subScience = menu.addSubMenu(R.string.hello_world);
+        		subScience.setIcon(R.drawable.ic_launcher);
+        		MenuInflater inflater = new MenuInflater(this);
+        		inflater.inflate(R.menu.main, subScience);
         return true;
     }
 

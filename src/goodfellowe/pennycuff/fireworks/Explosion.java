@@ -4,9 +4,14 @@
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Random;
 
+import android.content.Context;
 import android.graphics.Canvas;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 
 /**
  * @author Corey Pennycuff and Rob Goodfellowe
@@ -17,6 +22,7 @@ public class Explosion {
 	private int screenHeight;
 	private Random random = new Random();
 	protected long sleep;
+	private static MainActivity activity;
 
 	// Constants
 	static final public boolean ALIVE = true;
@@ -24,6 +30,7 @@ public class Explosion {
 
 	// State Variables
 	private boolean state;
+	public static final int SOUND_EXPLOSION = 1;
 
 	/**
 	 * Explosion Constructor
@@ -32,8 +39,12 @@ public class Explosion {
 		this.screenHeight = screenHeight;
 		particles = new Explosion.Particle[0];
 		sleep = 0;
+		activity = null;
 	}
 	
+	public void setActivity(MainActivity activity) {
+		this.activity = activity;
+	}
 	public boolean draw(Canvas canvas, long currentTime) {
 		boolean isAlive = false;
 		for (Explosion.Particle particle : particles) {
@@ -149,6 +160,7 @@ public class Explosion {
 			previousUpdate = startTime;
 			this.startTime = startTime;
 			endTime = this.startTime + lifeLength;
+			activity.playSound(SOUND_EXPLOSION);
 		}
 		
 		public boolean isAlive() {
