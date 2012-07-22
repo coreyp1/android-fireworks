@@ -7,12 +7,8 @@ public class ExplosionHorLine extends Explosion {
 	public ExplosionHorLine(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);
 		
-
-
-
-
 		Random random = new Random();
-		numParticles = 100;
+		numParticles = 75;
 		particles = new Explosion.Particle[numParticles];
 		double radius;
 		double maxRadius = .00000001;

@@ -8,7 +8,7 @@ public class ExplosionRing extends Explosion {
 		super(x, y, screenHeight);
 
 		Random random = new Random();
-		numParticles = 50;
+		numParticles = 40;
 		particles = new Explosion.Particle[numParticles];
 		double radius;
 		double maxRadius = .000001;

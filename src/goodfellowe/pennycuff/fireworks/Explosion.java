@@ -160,7 +160,7 @@ public class Explosion {
 			previousUpdate = startTime;
 			this.startTime = startTime;
 			endTime = this.startTime + lifeLength;
-			activity.soundThread.play(SOUND_EXPLOSION);
+			activity.soundThread.play(1);
 		}
 		
 		public boolean isAlive() {

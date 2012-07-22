@@ -19,7 +19,7 @@ public class ExplosionRandom extends Explosion {
 	public ExplosionRandom(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);
 		Random random = new Random();
-		numParticles = 75;
+		numParticles = 60;
 		particles = new Explosion.Particle[numParticles];
 		int radius = 5;
 		double radians;

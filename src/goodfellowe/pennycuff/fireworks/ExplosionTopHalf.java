@@ -9,7 +9,7 @@ public class ExplosionTopHalf extends Explosion {
 
 
 		Random random = new Random();
-		numParticles = 100;
+		numParticles = 75;
 		particles = new Explosion.Particle[numParticles];
 		int radius;
 		double maxRadius = 10;

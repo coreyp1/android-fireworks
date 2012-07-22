@@ -9,7 +9,7 @@ public class ExplosionDiamond extends Explosion {
 		
 
 		Random random = new Random();
-		numParticles = 100;
+		numParticles = 75;
 		particles = new Explosion.Particle[numParticles];
 		double radius;
 		double maxRadius = .000001;
