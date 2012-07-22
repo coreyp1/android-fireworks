@@ -139,6 +139,7 @@ public class Rocket {
 					stage = STAGE_EXPLOSION;
 					switch (random.nextInt(11)) {
 					case 0:
+						explosion = (Explosion) new ExplosionRandom(lastX, lastY, screenHeight);
 						break;
 					case 1:
 						explosion = (Explosion) new ExplosionCircle(lastX, lastY, screenHeight);
@@ -147,16 +148,16 @@ public class Rocket {
 						explosion = (Explosion) new ExplosionTopHalf(lastX, lastY, screenHeight);
 						break;
 					case 3:
-					explosion = (Explosion) new ExplosionDiamond(lastX, lastY, screenHeight);
+						explosion = (Explosion) new ExplosionDiamond(lastX, lastY, screenHeight);
 						break;
 					case 4:
-					explosion = (Explosion) new ExplosionTriangle(lastX, lastY, screenHeight);
+						explosion = (Explosion) new ExplosionTriangle(lastX, lastY, screenHeight);
 						break;
 					case 5:
-					explosion = (Explosion) new ExplosionVertLine(lastX, lastY, screenHeight);
+						explosion = (Explosion) new ExplosionVertLine(lastX, lastY, screenHeight);
 						break;
 					case 6:
-					explosion = (Explosion) new ExplosionHorLine(lastX, lastY, screenHeight);
+						explosion = (Explosion) new ExplosionHorLine(lastX, lastY, screenHeight);
 						break;
 					case 7:
 						explosion = (Explosion) new ExplosionCircleOutline(lastX, lastY, screenHeight);
