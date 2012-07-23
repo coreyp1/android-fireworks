@@ -48,15 +48,33 @@ public final class R {
         public static final int washington_post=0x7f040005;
     }
     public static final class string {
-        public static final int adjustFrequency=0x7f060005;
+        /**  Text used in settings.xml which prompts the user to change the frequency
+    of the fireworks launched 
+         */
+        public static final int adjustFrequency=0x7f060004;
+        /**  Name of the app 
+         */
         public static final int app_name=0x7f060000;
-        public static final int automaticFireworks=0x7f060004;
-        public static final int credits=0x7f060008;
-        public static final int detectGravity=0x7f060006;
-        public static final int disableSounds=0x7f060007;
-        public static final int hello_world=0x7f060001;
-        public static final int menu_settings=0x7f060002;
-        public static final int title_activity_main=0x7f060003;
+        /**  Text used in the settings.xml to prompt user to enable automatic fireworks 
+         */
+        public static final int automaticFireworks=0x7f060003;
+        /**  Text used by the menu to prompt user to click, and enter the
+    credits section of the app 
+         */
+        public static final int credits=0x7f060007;
+        /**  Text in the settings.xml which prompts user to detect the rotation
+    of the screen and align gravity with the rotation of the device 
+         */
+        public static final int detectGravity=0x7f060005;
+        /**  Text in settings.xml which prompts user to disable sounds 
+         */
+        public static final int disableSounds=0x7f060006;
+        /**  Used to display option to change settings in the menu 
+         */
+        public static final int menu_settings=0x7f060001;
+        /**  Title for the home screen 
+         */
+        public static final int title_activity_main=0x7f060002;
     }
     public static final class style {
         public static final int AppTheme=0x7f070000;

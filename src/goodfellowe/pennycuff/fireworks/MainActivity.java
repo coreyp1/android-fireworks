@@ -1,6 +1,8 @@
 /**
- * Fireworks
- * by Corey Pennycuff and Rob Goodfellowe
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
  */
 package goodfellowe.pennycuff.fireworks;
 
@@ -19,6 +21,8 @@ import android.content.Context;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
 
@@ -69,6 +73,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 			threadIsRunning = running;
 		}
 
+		// Soundpool loads and plays sound effects for the rocket and the explosion
 		@Override
 		public void run() {
 			soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
@@ -222,6 +227,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
+
 		getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }

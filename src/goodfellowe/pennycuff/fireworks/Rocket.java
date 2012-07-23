@@ -1,5 +1,8 @@
 /**
- * by Corey Pennycuff and Rob Goodfellowe
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
  */
 package goodfellowe.pennycuff.fireworks;
 
@@ -54,7 +57,7 @@ public class Rocket {
 	 * posion of the Rocket as a function of X.
 	 * x0, y0 is the origin, x0 is always "0".
 	 * x1, y1 is the target.
-	 * x2, y2 is the apex of the hyperbolea. x2 will be computed
+	 * x2, y2 is the apex of the hyperbola. x2 will be computed
 	 */
 	public boolean defineCriticalPoints(int y0, int y2, int x1, int y1, long duration, int screenWidth, int screenHeight) {
 		lastX = 0;
