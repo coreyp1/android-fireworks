@@ -22,6 +22,8 @@ import android.view.MenuInflater;
 import android.view.SubMenu;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.support.v4.app.NavUtils;
 import android.view.View.OnClickListener;
@@ -207,15 +209,22 @@ public class MainActivity extends Activity implements SensorEventListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        MenuItem item = menu.add("Painting");
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        //MenuItem item = menu.add("Painting");
         		//item.setIcon(R.drawable.ic_launcher);
-        		item = menu.add("Photos");
+        		//item = menu.add("Photos");
         		//item.setIcon(R.drawable.ic_action_search);
         		//getMenuInflater().inflate(R.menu.main, menu);
-        		SubMenu subScience = menu.addSubMenu(R.string.hello_world);
-        		subScience.setIcon(R.drawable.ic_launcher);
-        		MenuInflater inflater = new MenuInflater(this);
-        		inflater.inflate(R.menu.main, subScience);
+        		//SubMenu subScience = menu.addSubMenu(R.string.hello_world);
+        		//subScience.setIcon(R.drawable.ic_launcher);
+        		//MenuInflater inflater = new MenuInflater(this);
+        		//inflater.inflate(R.menu.main, subScience);
+        		//this.openOptionsMenu();
+                
+        		
+                //requestWindowFeature(Window.FEATURE_NO_TITLE);     
+                //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         return true;
     }
 
