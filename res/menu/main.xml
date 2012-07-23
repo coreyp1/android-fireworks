@@ -3,7 +3,5 @@
     <item android:id="@+id/menu_settings"
         android:title="@string/menu_settings"
         android:orderInCategory="100" />
-    <item android:title="Physics" />
-    <item android:title="Chemistry" />
-    <item android:title="Biology" />
+    <item android:title="@string/credits" android:id="@+id/menu_credits" android:orderInCategory="400"/>
 </menu>

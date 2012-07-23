@@ -1,7 +1,16 @@
+/**
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
+ */
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
+/*
+ * Creates a ring shaped explosion
+ */
 public class ExplosionRing extends Explosion {
 
 	public ExplosionRing(int x, int y, int screenHeight) {
@@ -11,7 +20,7 @@ public class ExplosionRing extends Explosion {
 		numParticles = 40;
 		particles = new Explosion.Particle[numParticles];
 		double radius;
-		double maxRadius = .000001;
+		double maxRadius = .0000005;
 		double radians;
 		double angle;
 		double velX;
@@ -22,13 +31,11 @@ public class ExplosionRing extends Explosion {
 		for (int i = 0; i < numParticles; i++) {
 			angle = random.nextDouble() * 360;
 			angle = i * 10;
-			//angle = angle % 360;
 			
 			angle = angle / 90;
 			angle = Math.round(angle);
 			angle = angle * 90;
-			
-			
+
 			radians = (angle * Math.PI) / 180;
 			if (angle <= 360){
 				radius = 10;
@@ -37,50 +44,11 @@ public class ExplosionRing extends Explosion {
 				scaleFactor = Math.pow(1+Math.cos(radians), differenceMagnitude);
 				radius = 1;	
 			}
-			
-			
-			
-			
-			//radians = random.nextDouble() * 2 * Math.PI;
+
 			particles[i] = new Explosion.Particle(x,  y, random.nextInt(Ember.LIGHTS_TOTAL), screenHeight);
-			//particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();
-			//particles[i].velocityY = Math.sin(radians) * radius * random.nextDouble();
 			particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();
 			particles[i].velocityY = Math.sin(radians) * radius * random.nextDouble();
 		}
 	}
 
 }
-/*if (angle <= 45){
-	scaleFactor = Math.pow(1+Math.cos(radians), differenceMagnitude);
-	radius = scaleFactor * maxRadius;	
-}
-else if (angle > 45 && angle <= 90){
-	scaleFactor = Math.pow(1+Math.sin(radians), differenceMagnitude);
-	radius = scaleFactor * maxRadius;	
-}
-else if (angle > 90 && angle <= 135){
-	scaleFactor = Math.pow(1+Math.sin(radians), differenceMagnitude);
-	radius = scaleFactor * maxRadius;	
-}
-else if (angle > 135 && angle <= 180){
-	scaleFactor = Math.pow(1+(-Math.cos(radians)), differenceMagnitude);
-	radius = scaleFactor * maxRadius;	
-}
-else if (angle > 180 && angle <= 225){
-	scaleFactor = Math.pow(1+(-Math.cos(radians)), differenceMagnitude);
-	radius = scaleFactor * maxRadius;	
-}
-else if (angle > 225 && angle <= 270){
-	scaleFactor = Math.pow(1+(-Math.sin(radians)), differenceMagnitude);
-	radius = scaleFactor * maxRadius;	
-}
-else if (angle > 270 && angle <= 315){
-	scaleFactor = Math.pow(1+(-Math.sin(radians)), differenceMagnitude);
-	radius = scaleFactor * maxRadius;	
-}
-else {
-	scaleFactor = Math.pow(1+Math.cos(radians), differenceMagnitude);
-	radius = scaleFactor * maxRadius;	
-}
-	*/

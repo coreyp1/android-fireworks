@@ -1,9 +1,22 @@
+/**
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
+ */
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
+/**
+ * ExplosionHorLine class
+ * Creates an explosion whose Particles are initially in a horizontal area
+ */
 public class ExplosionHorLine extends Explosion {
 
+	/**
+	 * Constructor
+	 */
 	public ExplosionHorLine(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);
 		
@@ -14,11 +27,9 @@ public class ExplosionHorLine extends Explosion {
 		double maxRadius = .00000001;
 		double radians;
 		double angle;
-		double velX;
-		double velY;
 		double scaleFactor;
 		double differenceMagnitude = 30;
-		
+		int color = random.nextInt(Ember.LIGHTS_TOTAL);
 				
 		for (int i = 0; i < numParticles; i++) {
 			angle = random.nextDouble() * 360;
@@ -56,17 +67,9 @@ public class ExplosionHorLine extends Explosion {
 				radius = scaleFactor * maxRadius;	
 			}
 			
-			
-			
-			//radians = random.nextDouble() * 2 * Math.PI;
-			particles[i] = new Explosion.Particle(x,  y, 1, screenHeight);
-			//particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();
-			//particles[i].velocityY = Math.sin(radians) * radius * random.nextDouble();
+			particles[i] = new Explosion.Particle(x,  y, color, screenHeight);
 			particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();
 			particles[i].velocityY = Math.sin(radians) * radius * random.nextDouble();
-		
-			}
+		}
 	}
-	
-
 }

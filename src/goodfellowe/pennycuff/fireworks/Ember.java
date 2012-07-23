@@ -1,5 +1,8 @@
 /**
- * 
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
  */
 package goodfellowe.pennycuff.fireworks;
 
@@ -12,17 +15,13 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.Xfermode;
 import android.util.FloatMath;
 
 /**
- * @author Corey Pennycuff and Rob Goodfellowe
- * 
+ * Ember Class
+ * Draws a semi-realistic, flickering, glowing ember image
  */
 public class Ember {
-	public Ember.Point current = new Ember.Point();
-	public Ember.Point previous = new Ember.Point();
-
 	// Constants
 	static final public boolean ALIVE = true;
 	static final public boolean DEAD = false;
@@ -32,24 +31,30 @@ public class Ember {
 	static final public int LIGHT_MASTER_SIZE = LIGHT_SIZE * LIGHTS_ACROSS;
 	static final public int LIGHT_SIZE_OFFSET = LIGHT_SIZE / 2;
 	static final public float LIGHT_ALPHA = (float) .8;
+
+    // Bitmap related variables for Ember colors
 	static public Bitmap lightBitmap = Bitmap.createBitmap(LIGHT_MASTER_SIZE,
 			LIGHT_MASTER_SIZE, Bitmap.Config.ARGB_8888);
 	static public Canvas lightCanvas = new Canvas(lightBitmap);
 	static public boolean lightCreated = false;
-	static private Random random = new Random();
-
 	private Rect from = new Rect();
 	private Rect to = new Rect();
 
 	// State Variables
-	private int emberColor;
-	private Paint paint;
+	private int emberColor; // The color of the ember, from 0 to LIGHTS_TOTAL
+	private Paint paint; // The Paint object used to blend the Ember
+	public Ember.Point current = new Ember.Point();
+	public Ember.Point previous = new Ember.Point();
+	static private Random random = new Random();
 
 	/**
 	 * Constructor
 	 */
 	public Ember() {
-		// Create the Ember source bitmap, if it is not yet created
+		// Create the Ember source bitmap, if it is not yet created.
+		// Because the variables are static, the createEmber() function will
+		// only be called once in the application.
+		// NOTE: Synchronization protection happens within createEmber().
 		if (!lightCreated) {
 			createEmber();
 		}
@@ -60,7 +65,7 @@ public class Ember {
 	}
 	
 	/**
-	 * Set the ember color to a value of 0 through 99
+	 * Set the ember color to a value of 0 through LIGHTS_TOTAL
 	 * @param newColor
 	 * @return
 	 */

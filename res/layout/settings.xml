@@ -1,0 +1,44 @@
+<!-- 
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
+-->
+
+<!-- settings.xml - Allows users to save customized settings 
+for their app -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+    <!-- automaticFireworks - allows users to turn on fireworks
+    which launch automatically, as opposed to requiring them to 
+    click on the screen to launch a firework -->
+    <CheckBox
+        android:id="@+id/automaticFireworks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/automaticFireworks" />
+
+    <!-- adjustFrequencyTextView - displays to the
+    rate at which automatic fireworks are launched -->
+    <TextView
+        android:id="@+id/adjustFrequencyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/automaticFireworks"
+        android:layout_centerHorizontal="true"
+        android:text="@string/adjustFrequency" />
+
+    <!-- adjustFrequencySeekbar - seekbar which allows user 
+    to change the rate at which automatic fireworks are launched -->
+    <SeekBar
+        android:id="@+id/adjustFrequencySeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/adjustFrequencyTextView" />
+
+</RelativeLayout>

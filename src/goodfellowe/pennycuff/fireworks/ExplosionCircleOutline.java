@@ -1,24 +1,29 @@
 /**
- * 
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
  */
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
 /**
- * @author Corey
- * 
+ * ExplosionCircleOutline Class
+ * Creates an Explosion in the shape of two concentric rings
  */
 public class ExplosionCircleOutline extends Explosion {
 
 	/**
-	 * @param x
-	 * @param y
-	 * @param screenHeight
+	 * Constructor
 	 */
 	public ExplosionCircleOutline(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);
-		sleep = 1000;
+
+		// Set the sleep value
+		sleep = 100;
+		
+		// Set up variables
 		int numParticles = 80;
 		Random random = new Random();
 		int color1 = random.nextInt(Ember.LIGHTS_TOTAL);
@@ -28,6 +33,8 @@ public class ExplosionCircleOutline extends Explosion {
 		double radians;
 		particles = new Explosion.Particle[numParticles];
 		int particleX, particleY;
+		
+		// Set particles for the first circle
 		for (int i = 0; i < 40; i++) {
 			radians = 360 / 40 * i;
 			particleX = (int)(x + (Math.cos(radians) * radius1));
@@ -36,6 +43,8 @@ public class ExplosionCircleOutline extends Explosion {
 			particles[i].velocityX = Math.cos(radians) * 3 * random.nextDouble();
 			particles[i].velocityY = Math.sin(radians) * 3 * random.nextDouble();
 		}
+		
+		// Set particles for the second circle
 		for (int i = 0; i < 40; i++) {
 			radians = 360 / 40 * i;
 			particleX = (int)(x + (Math.cos(radians) * radius2));

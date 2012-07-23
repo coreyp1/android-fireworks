@@ -1,20 +1,21 @@
 /**
- * 
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
  */
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
 /**
- * @author Corey Pennycuff and Rob Goodfellowe
- *
+ * ExplosionRandom Class
+ * Creates a standard, random explosion
  */
 public class ExplosionRandom extends Explosion {
 
 	/**
-	 * @param x
-	 * @param y
-	 * @param screenHeight
+	 * Constructor
 	 */
 	public ExplosionRandom(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);

@@ -1,9 +1,25 @@
+/**
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
+ */
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
+/**
+ * ExplosionStar Class
+ * Creates a star shaped explosion
+ * with a randomized number of sides
+ * and a randomized angle used for the
+ * rotation angle
+ */
 public class ExplosionStar extends Explosion {
 
+	/**
+	 * Constructor
+	 */
 	public ExplosionStar(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);
 		Random random = new Random();
@@ -19,9 +35,7 @@ public class ExplosionStar extends Explosion {
 		double differenceMagnitude = 23;
 		double numOfPoints = random.nextInt(4) + 4;
 		double numOfPointDegrees = 360 / numOfPoints;
-		
-				
-		
+	
 		for (int i = 0; i < numParticles; i++) {
 
 				angle = i * numOfPointDegrees;
@@ -32,23 +46,9 @@ public class ExplosionStar extends Explosion {
 					angle = angle * numOfPointDegrees + 18;
 				}
 				angle = angle * numOfPointDegrees + ((1 / (random.nextInt(3)+1)) * numOfPointDegrees);
-				
-				
+
 				radians = (angle * Math.PI) / 180;
 				radius = maxRadius;
-				/*
-				 if (angle <= 360){
-					radius = 10;
-				}
-				else {
-					scaleFactor = Math.pow(1+Math.cos(radians), differenceMagnitude);
-					radius = 1;	
-				}
-				*/
-				
-				
-				
-				
 	
 				particles[i] = new Explosion.Particle(x,  y, random.nextInt(Ember.LIGHTS_TOTAL), screenHeight);
 				particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();

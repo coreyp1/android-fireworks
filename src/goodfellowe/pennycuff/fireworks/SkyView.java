@@ -1,10 +1,11 @@
 /**
- * 
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
  */
 package goodfellowe.pennycuff.fireworks;
 
-import java.util.AbstractSet;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -14,9 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -24,33 +23,36 @@ import android.view.SurfaceView;
 import android.view.GestureDetector.SimpleOnGestureListener;
 
 /**
- * @author Corey Pennycuff and Rob Goodfellowe
- * 
+ * SkyView Class
+ * Draws and animates fireworks
  */
 public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 	// Constants
-	final public int MODE_ONTOUCH = 0;
-	final public int MODE_CONTINUOUS = 1;
-	final private long ROCKET_ADD_INTERVAL = 3000;
+	final private long ROCKET_ADD_INTERVAL = 1000;
 
-	private FireworksThread fireworksThread; // controls the game loop
-	private int screenWidth; // width of the screen
-	private int screenHeight; // height of the screen
-
+	// Thread variables
+	private FireworksThread fireworksThread; // Controls the display loop
 	private long lastDim; // Track the time that the screen was last dimmed
-	private long lastRocketAdd; // Track the last attempt to add a rocket
-	private double gravityX = 0;
-	private double gravityY = -2;
-	private int state;
-	private Set<Rocket> rockets = new HashSet<Rocket>();
-	private Set<Rocket> rocketsToBeRemoved = new HashSet<Rocket>();
-	private GestureDetector gestureDetector; // listens for double taps
-	private MainActivity activity;
-	
 	private Paint dimmingPaint; // Paint used to clear the drawing area
-	private Random random = new Random();
+	private long lastRocketAdd; // Track the last attempt to add a rocket
+	private double gravityX = 0; // Gravity of the X-axis
+	private double gravityY = -2; // Gravity of the Y-axis
+
+	// State variables
+	private int screenWidth; // Width of the screen
+	private int screenHeight; // Height of the screen
+	private int fireworksGenerationMode; // Tracks how fireworks are generated
+	private MainActivity activity; // Link to the parent activity
+	private Random random = new Random(); // Used for all random values
+	private int frequency = 20; // Average frequency of adding rockets
+	
+	// Rockets and Explosions
+	private Set<Rocket> rockets = new HashSet<Rocket>(); // Stores all rockets
+	private Set<Rocket> rocketsToBeRemoved = new HashSet<Rocket>(); // Dead rockets
+	private GestureDetector gestureDetector; // Listens for double taps
 
 	/**
+	 * Constructor
 	 * @param context
 	 */
 	public SkyView(Context context) {
@@ -59,6 +61,7 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	/**
+	 * Constructor
 	 * @param context
 	 * @param attrs
 	 */
@@ -68,6 +71,7 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	/**
+	 * Constructor
 	 * @param context
 	 * @param attrs
 	 * @param defStyle
@@ -82,27 +86,33 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 	 */
 	private void setup() {
 		activity = null;
+
 		// Register SurfaceHolder.Callback listener
 		getHolder().addCallback(this);
 
-		// Set the paint for dimming
-		dimmingPaint = new Paint(); // Paint for drawing the target
+		// Set the paint for dimming the drawing Canvas
+		dimmingPaint = new Paint();
 		dimmingPaint.setColor(Color.parseColor("#05000000"));
 
 		// Set the state
-		state = MODE_CONTINUOUS;
+		fireworksGenerationMode = MainActivity.MODE_CONTINUOUS;
 
 		// Initialize the GestureDetector
 		gestureDetector = new GestureDetector(this.getContext(),
 				gestureListener);
 	}
+	
+	/**
+	 * Helper method to set a reference to the parent activity.
+	 * @param activity
+	 */
 	public void setActivity(MainActivity activity) {
 		this.activity = activity;
 	}
 
 	/**
 	 * Called by surfaceChanged when the size of the SurfaceView changes, such
-	 * as when it's first added to the View hierarchy
+	 * as when it's first added to the View hierarchy.
 	 */
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -112,24 +122,32 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 		screenHeight = h; // store the height
 	}
 
-	// called when surface changes size
+	/**
+	 * Called when surface changes size.
+	 */
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
-	} // end method surfaceChanged
-
-	// called when surface is first created
-	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		fireworksThread = new FireworksThread(holder);
-		fireworksThread.setRunning(true);
-		fireworksThread.start(); // start the game loop thread
+		// Intentionally empty
 	}
 
-	// called when the surface is destroyed
+	/**
+	 * Called when surface is first created.
+	 */
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		// Start the fireworks loop thread
+		fireworksThread = new FireworksThread(holder);
+		fireworksThread.setRunning(true);
+		fireworksThread.start();
+	}
+
+	/**
+	 * Called when the surface is destroyed.
+	 */
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// ensure that thread terminates properly
+		// Ensure that thread terminates properly
 		boolean retry = true;
 		fireworksThread.setRunning(false);
 
@@ -137,34 +155,48 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			try {
 				fireworksThread.join();
 				retry = false;
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e) {
 			}
 		}
 	}
 
-	// Update the Gravity
+	/**
+	 * Update the Gravity.
+	 */
 	public void updateGravity(double newGravityX, double newGravityY) {
 		gravityX = newGravityX;
 		gravityY = newGravityY;
 	}
 
-	// draws the game to the given Canvas
-	public void dimCanvas(Canvas canvas, long currentTime) {
-		// clear the background
+	/**
+	 * Dims the Canvas.
+	 * Returns true if canvas was dimmed, false otherwise.
+	 * @param canvas
+	 * @param currentTime
+	 */
+	public boolean dimCanvas(Canvas canvas, long currentTime) {
+		// Only dim the canvas 10 times per second
 		if (currentTime - lastDim > 100) {
 			canvas.drawARGB(10, 0, 0, 0);
 			lastDim += 100;
+			return true;
 		}
-
+		return false;
 	}
 
+	/**
+	 * Respond to onTouchEvents
+	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent e) {
-		// call the GestureDetector's onTouchEvent method
+		// Call the GestureDetector's onTouchEvent method
 		return gestureDetector.onTouchEvent(e);
 	}
 
-	// Listens for touch events sent to the GestureDetector
+	/**
+	 * Listens for touch events sent to the GestureDetector
+	 */
 	SimpleOnGestureListener gestureListener = new SimpleOnGestureListener() {
 		@Override
 		public boolean onSingleTapConfirmed(MotionEvent e) {
@@ -187,13 +219,18 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			return true;
 		}
 
+		/**
+		 * Necessary for the SimpleOnGestureListener to respond to Taps.
+		 */
 		@Override
 		public boolean onDown(MotionEvent e) {
 			return true;
 		}
 	};
 
-	// Thread subclass to control the fireworks loop
+	/**
+	 * Thread subclass to control the fireworks loop.
+	 */
 	private class FireworksThread extends Thread {
 		private SurfaceHolder surfaceHolder; // for manipulating canvas
 		private boolean threadIsRunning = true; // running by default
@@ -226,10 +263,11 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 			long previousFrameTime = System.currentTimeMillis();
 			lastRocketAdd = previousFrameTime - ROCKET_ADD_INTERVAL;
 
+			// Paint variable used in drawing stars
 			Paint color = new Paint();
 			color.setARGB(255, 255, 255, 255);
 
-			// Create Stars
+			// Create Stars array
 			final int STAR_COUNT = 40;
 			int[] starX = new int[STAR_COUNT], starY = new int[STAR_COUNT];
 			for (int i = 0; i < STAR_COUNT; i++) {
@@ -242,39 +280,42 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 				long currentTime = System.currentTimeMillis();
 
 				// First, dim the canvas, if appropriate
-				dimCanvas(tempCanvas, currentTime);
-
-				// Randomly make a star disappear and reappear somewhere else
-				if (random.nextInt(20) == 0) {
-					starUpdate = random.nextInt(STAR_COUNT);
-					starX[starUpdate] = random.nextInt(screenWidth);
-					starY[starUpdate] = random.nextInt(screenHeight);
-				}
-				// Draw the stars
-				for (int i = 0; i < STAR_COUNT; i++) {
-					tempCanvas.drawPoint(starX[i], starY[i], color);
+				if (dimCanvas(tempCanvas, currentTime)) {
+					// If the Canvas was dimmed, then re-draw the stars
+					// Randomly make a star disappear and reappear somewhere else
+					if (random.nextInt(20) == 0) {
+						starUpdate = random.nextInt(STAR_COUNT);
+						starX[starUpdate] = random.nextInt(screenWidth);
+						starY[starUpdate] = random.nextInt(screenHeight);
+					}
+					// Draw the stars
+					for (int i = 0; i < STAR_COUNT; i++) {
+						tempCanvas.drawPoint(starX[i], starY[i], color);
+					}
 				}
 
 				// If we are in MODE_CONTINUOUS, add a rocket, if appropriate
-				if (state == MODE_CONTINUOUS) {
+				if (fireworksGenerationMode == MainActivity.MODE_CONTINUOUS) {
 					// Only add a rocket ever so often
 					if (lastRocketAdd + ROCKET_ADD_INTERVAL < currentTime) {
 						lastRocketAdd = currentTime;
-						Rocket rocket = new Rocket(activity);
-						int y1 = (screenHeight / 4)
-								+ random.nextInt(screenHeight / 2);
-						int y2 = y1 + random.nextInt(screenHeight / 4) + 1;
-						int x1 = (screenWidth / 4)
-								+ random.nextInt(screenWidth / 2);
-						while (!rocket.defineCriticalPoints(
-								random.nextInt(100), y2, x1, y1,
-								950 + random.nextInt(1000), screenWidth,
-								screenHeight))
-							;
-						rocket.makeAlive(currentTime);
-						// Add to the collection
-						synchronized (rockets) {
-							rockets.add(rocket);
+						if (random.nextInt(100) <= frequency) {
+							Rocket rocket = new Rocket(activity);
+							int y1 = (screenHeight / 4)
+									+ random.nextInt(screenHeight / 2);
+							int y2 = y1 + random.nextInt(screenHeight / 4) + 1;
+							int x1 = (screenWidth / 4)
+									+ random.nextInt(screenWidth / 2);
+							while (!rocket.defineCriticalPoints(
+									random.nextInt(100), y2, x1, y1,
+									950 + random.nextInt(1000), screenWidth,
+									screenHeight))
+								; // Empty loop to generate appropriate values;
+							rocket.makeAlive(currentTime);
+							// Add to the collection
+							synchronized (rockets) {
+								rockets.add(rocket);
+							}
 						}
 					}
 				}
@@ -295,10 +336,12 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 					// Cleanup. Remove dead rockets
 					for (Rocket rocket : rocketsToBeRemoved) {
 						rockets.remove(rocket);
+						rocket = null;
 					}
 					rocketsToBeRemoved.clear();
 				}
 
+				// Transfer the bitmap drawings to the Canvas
 				try {
 					canvas = surfaceHolder.lockCanvas(null);
 					// Lock the surfaceHolder for updating with bitmap
@@ -312,7 +355,7 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 						surfaceHolder.unlockCanvasAndPost(canvas);
 					}
 				}
-				previousFrameTime = currentTime; // update previous time
+				previousFrameTime = currentTime; // Update previous time
 			}
 		}
 	}
