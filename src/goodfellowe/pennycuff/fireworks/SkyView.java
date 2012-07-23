@@ -1,5 +1,8 @@
 /**
- * by Corey Pennycuff and Rob Goodfellowe
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
  */
 package goodfellowe.pennycuff.fireworks;
 
@@ -231,7 +234,7 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 	private class FireworksThread extends Thread {
 		private SurfaceHolder surfaceHolder; // for manipulating canvas
 		private boolean threadIsRunning = true; // running by default
-
+	
 		// Initializes the surface holder
 		public FireworksThread(SurfaceHolder holder) {
 			surfaceHolder = holder;

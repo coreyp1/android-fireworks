@@ -1,5 +1,8 @@
 /**
- * by Corey Pennycuff and Rob Goodfellowe
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
  */
 package goodfellowe.pennycuff.fireworks;
 

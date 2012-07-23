@@ -1,13 +1,38 @@
+<!-- 
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
+-->
+
+<!-- strings.xml - contains text used in app -->
 <resources>
 
+    <!-- Name of the app -->
     <string name="app_name">Fireworks</string>
-    <string name="hello_world">Hello world!</string>
+	
+    <!-- Used to display option to change settings in the menu -->
     <string name="menu_settings">Settings</string>
+    
+    <!-- Title for the home screen -->
     <string name="title_activity_main">Fireworks</string>
+    
+    <!-- Text used in the settings.xml to prompt user to enable automatic fireworks -->
     <string name="automaticFireworks">Enable automatic fireworks</string>
+   
+    <!-- Text used in settings.xml which prompts the user to change the frequency
+    of the fireworks launched -->
     <string name="adjustFrequency">Adjust launch frequency</string>
+    
+    <!-- Text in the settings.xml which prompts user to detect the rotation
+    of the screen and align gravity with the rotation of the device -->
     <string name="detectGravity">Detect Gravity</string>
+    
+    <!-- Text in settings.xml which prompts user to disable sounds -->
     <string name="disableSounds">Disable sounds</string>
+    
+    <!-- Text used by the menu to prompt user to click, and enter the
+    credits section of the app -->
     <string name="credits">Credits</string>
 
 </resources>

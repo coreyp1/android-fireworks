@@ -1,3 +1,16 @@
+<!-- 
+Corey Pennycuff and Rob Goodfellowe
+PROG 3: 7.11 Fireworks Show
+Utilize principles learned from Cannonball App
+and create an animated fireworks show
+-->
+
+<!-- main.xml
+Main layout for the fireworks app -->
+
+<!-- Relative layout allows us to put a view on the 
+with other elements so that the view can be
+seen through the elements in front of it -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RelativeLayout"
@@ -5,6 +18,7 @@
     android:layout_height="fill_parent"
     android:background="#00FFFFFF" >
 
+    <!-- SkyView - main animation element displays the actual fireworks -->
     <goodfellowe.pennycuff.fireworks.SkyView
         android:id="@+id/skyView"
         android:layout_width="fill_parent"
@@ -12,6 +26,8 @@
         android:layout_span="2"
         android:layout_weight="1" />
 
+    <!-- spangled - Invisible button which plays the 
+    Star Spangled Banner wav file -->
     <Button
         android:id="@+id/spangled"
         android:layout_width="50dp"
@@ -21,9 +37,11 @@
         android:layout_weight="1"
         android:background="#00FFFFFF"
         android:text=""
-        android:textColor="#00FFFFFF"
+        textColor="#00FFFFFF"
         android:textSize="20dp" />
 
+    <!-- washington - Invisible button which plays the
+    Washington Post wav file -->
     <Button
         android:id="@+id/washington"
         android:layout_width="50dp"
@@ -36,6 +54,8 @@
         android:textColor="#00FFFFFF"
         android:textSize="20dp" />
 
+    <!-- thunderer - Invisible button which plays the 
+    Thunderer wav file-->
     <Button
         android:id="@+id/thunderer"
         android:layout_width="50dp"
@@ -48,6 +68,8 @@
         android:textColor="#00FFFFFF"
         android:textSize="20dp" />
 
+    <!-- stripes - Invisible button which plays the 
+    Stars and Stripes Forever wav file -->
     <Button
         android:id="@+id/stripes"
         android:layout_width="50dp"
@@ -60,4 +82,5 @@
         android:textColor="#00FFFFFF"
         android:textSize="20dp" />
 
+ <!-- End of layout main file -->
 </RelativeLayout>
