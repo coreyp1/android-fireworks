@@ -1,12 +1,13 @@
+/**
+ * Fireworks
+ * by Corey Pennycuff and Rob Goodfellowe
+ */
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.HashMap;
 
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,31 +16,41 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuInflater;
-import android.view.SubMenu;
-import android.view.SurfaceHolder;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
-import android.support.v4.app.NavUtils;
-import android.view.View.OnClickListener;
 
 public class MainActivity extends Activity implements SensorEventListener {
-	SkyView skyView = null;
-	SensorManager sensorManager;
-	boolean useGravity;
-	
+	// Constants
 	public static final int SOUND_EXPLOSION = 1;
 	public static final int SOUND_ROCKET = 2;
-	private MediaPlayer starsMp;
-	private MediaPlayer spangledMp;
-	private MediaPlayer thundererMp;
-	private MediaPlayer washingtonMp;
-		
+	final public static int MODE_ONTOUCH = 0;
+	final public static int MODE_CONTINUOUS = 1;
+	final public static int MP_STARS = 0;
+	final public static int MP_SPANGLED = 1;
+	final public static int MP_WASHINGTON = 2;
+	final public static int MP_THUNDERER = 3;
+
+	// Sound-related variables
+	private MediaPlayer[] player;
     public SoundThread soundThread;
-        
+    
+    // Settings update page
+    private View settingsView;
+    
+    // State variables
+	boolean useGravity;
+    
+	// Element Variables
+	SkyView skyView = null;
+	SensorManager sensorManager;
+	
+    /**
+     * Constructor
+     *
+     */
     public class SoundThread extends Thread {
     	private SoundPool soundPool;
         private HashMap<Integer, Integer> soundPoolMap;
@@ -86,6 +97,9 @@ public class MainActivity extends Activity implements SensorEventListener {
 		}
     }
     
+    /**
+     * Called when the activity is starting.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,81 +109,47 @@ public class MainActivity extends Activity implements SensorEventListener {
     	soundThread.setRunning(true);
     	soundThread.start();
         
+    	// Set the layout
         setContentView(R.layout.main);
-                
-		starsMp = MediaPlayer.create(this,
-				R.raw.stars_and_stripes_forever);
-		spangledMp = MediaPlayer.create(this,
-				R.raw.the_star_spangled_banner);
-		thundererMp = MediaPlayer.create(this,
-				R.raw.thunderer);
-		washingtonMp = MediaPlayer.create(this, 
-				R.raw.washington_post);
         
+        // Load the media
+        player = new MediaPlayer[4];
+		player[MP_STARS] = MediaPlayer.create(this,	R.raw.stars_and_stripes_forever);
+		player[MP_SPANGLED] = MediaPlayer.create(this, R.raw.the_star_spangled_banner);
+		player[MP_THUNDERER] = MediaPlayer.create(this, R.raw.thunderer);
+		player[MP_WASHINGTON] = MediaPlayer.create(this, R.raw.washington_post);
+        
+		// Set the onClick listeners for the MediaPlayer buttons
         Button stripesPlayerButton = (Button) this.findViewById(R.id.stripes);
-        stripesPlayerButton.setVisibility(0);
-        //stripesPlayerButton.setBackgroundColor(Color.TRANSPARENT);        
         stripesPlayerButton.setOnClickListener(new View.OnClickListener() {
         	@Override
         	public void onClick(View v) {
-        		if (starsMp.isPlaying() == true) {
-        			starsMp.pause();
-        			starsMp.seekTo(0);
-        		}
-        		else if (starsMp.isPlaying() == false)
-        		{
-        			
-        			starsMp.start();
-        		}
+        		toggleMpState(player[MP_STARS]);
         	}
         });
         Button spangledPlayerButton = (Button) this.findViewById(R.id.spangled);
-        spangledPlayerButton.setVisibility(0);
         spangledPlayerButton.setOnClickListener(new View.OnClickListener() {
         	@Override
         	public void onClick(View v) {
-        		if (spangledMp.isPlaying() == true) {
-        			spangledMp.pause();
-        			spangledMp.seekTo(0);
-        		}
-        		else if (spangledMp.isPlaying() == false)
-        		{
-        			
-        			spangledMp.start();
-        		}
+        		toggleMpState(player[MP_WASHINGTON]);
         	}
         });
         Button washingtonPlayerButton = (Button) this.findViewById(R.id.washington);
         washingtonPlayerButton.setOnClickListener(new View.OnClickListener() {
         	@Override
         	public void onClick(View v) {
-        		if (washingtonMp.isPlaying() == true) {
-        			washingtonMp.pause();
-        			washingtonMp.seekTo(0);
-        		}
-        		else if (washingtonMp.isPlaying() == false)
-        		{
-        			
-        			washingtonMp.start();
-        		}
+        		toggleMpState(player[MP_WASHINGTON]);
         	}
         });
         Button thundererPlayerButton = (Button) this.findViewById(R.id.thunderer);
         thundererPlayerButton.setOnClickListener(new View.OnClickListener() {
         	@Override
         	public void onClick(View v) {
-        		if (thundererMp.isPlaying() == true) {
-        			thundererMp.pause();
-        			thundererMp.seekTo(0);
-        		}
-        		else if (thundererMp.isPlaying() == false)
-        		{
-        			
-        			thundererMp.start();
-        		}
+        		toggleMpState(player[MP_THUNDERER]);
         	}
         });
         
+        // Set variables for elements to be monitored
         skyView = (SkyView) findViewById(R.id.skyView);
         skyView.setActivity(this);
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -178,7 +158,33 @@ public class MainActivity extends Activity implements SensorEventListener {
         // Allow volume keys to set sound volume
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
+    
+    /**
+     * Toggle the MediaPlayer's Playing State
+     */
+    private void toggleMpState(MediaPlayer mp) {
+   		if (mp.isPlaying() == true) {
+   			// Stop this particular media player
+   			mp.pause();
+   			mp.seekTo(0);
+		}
+		else if (mp.isPlaying() == false)
+		{
+			// Stop all other media players to avoid overlap
+			for (MediaPlayer p : player) {
+				if (p.isPlaying()) {
+					p.pause();
+					p.seekTo(0);
+				}
+			}
+			// Start the desired media player
+			mp.start();
+		}
+    }
 
+    /**
+     * Called when the application is restarted or unpaused.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -187,38 +193,61 @@ public class MainActivity extends Activity implements SensorEventListener {
                 SensorManager.SENSOR_DELAY_FASTEST);
     }
     
+    /**
+     * Called when the application is no longer visible to the user.
+     */
     @Override
     protected void onStop() {
         sensorManager.unregisterListener(this);
         super.onStop();
     }
     
+    /**
+     * Final cleanup before Activity is destroyed.
+     */
     @Override
     protected void onDestroy() {
         soundThread.setRunning(false);
         // Stop the music
-        starsMp.stop();
-    	spangledMp.stop();
-    	thundererMp.stop();
-    	washingtonMp.stop();
+        for (MediaPlayer mp : player) {
+        	mp.stop();
+        	mp.release();
+        }
         super.onDestroy();
     }
 
+    /**
+     * Menu is being created.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        MenuItem item = menu.add("Painting");
-        		//item.setIcon(R.drawable.ic_launcher);
-        		item = menu.add("Photos");
-        		//item.setIcon(R.drawable.ic_action_search);
-        		//getMenuInflater().inflate(R.menu.main, menu);
-        		SubMenu subScience = menu.addSubMenu(R.string.hello_world);
-        		subScience.setIcon(R.drawable.ic_launcher);
-        		MenuInflater inflater = new MenuInflater(this);
-        		inflater.inflate(R.menu.main, subScience);
+		getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
+	/**
+	 * Called when the user selects an option from the menu
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		String string;
+		WebView webView;
+		// Switch the menu id of the user-selected option
+		switch (item.getItemId()) {
+		case R.id.menu_settings:
+			// The Settings menu has been requested
+			break;
+		case R.id.menu_credits:
+			// The Credits page has been requested
+			break;
+		}
+		return true;
+	}
+
+   /**
+     * Responds to Sensor events, specifically TYPE_ACCELEROMETER.
+     */
     public void onSensorChanged(SensorEvent event) {
     	if (useGravity && event.sensor.getType() == Sensor.TYPE_ACCELEROMETER && skyView != null) {
     		synchronized(this) {
@@ -233,8 +262,10 @@ public class MainActivity extends Activity implements SensorEventListener {
     	}
     }
     
-    // Must be included for Interface
+    /**
+     *  Must be included for SensorEventListener Interface
+     */
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    	// It is fine for this to be empty.
     }
-    
 }

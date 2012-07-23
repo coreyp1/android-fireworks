@@ -11,7 +11,7 @@ public class ExplosionRing extends Explosion {
 		numParticles = 40;
 		particles = new Explosion.Particle[numParticles];
 		double radius;
-		double maxRadius = .000001;
+		double maxRadius = .0000005;
 		double radians;
 		double angle;
 		double velX;

@@ -1,28 +1,22 @@
 /**
- * 
+ * by Corey Pennycuff and Rob Goodfellowe
  */
 package goodfellowe.pennycuff.fireworks;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Random;
-
-import android.content.Context;
 import android.graphics.Canvas;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
 
 /**
- * @author Corey Pennycuff and Rob Goodfellowe
+ * Explosion Class
+ * Superclass for handling all explosions.
  */
 public class Explosion {
-	protected Explosion.Particle[] particles;
-	protected int numParticles;
-	private int screenHeight;
-	private Random random = new Random();
-	protected long sleep;
-	private static MainActivity activity;
+	protected Explosion.Particle[] particles; // Array for storing particles
+	protected int numParticles; // Store the number of particles
+	private int screenHeight; // Store the height of the screen
+	private Random random = new Random(); // Generate random values
+	protected long sleep; // Delay display of the Particles
+	private MainActivity activity; // Link to the parent activity
 
 	// Constants
 	static final public boolean ALIVE = true;
@@ -30,7 +24,6 @@ public class Explosion {
 
 	// State Variables
 	private boolean state;
-	public static final int SOUND_EXPLOSION = 1;
 
 	/**
 	 * Explosion Constructor
@@ -42,41 +35,65 @@ public class Explosion {
 		activity = null;
 	}
 	
+	/**
+	 * Set the reference to the MainActivity.
+	 */
 	public void setActivity(MainActivity activity) {
 		this.activity = activity;
 	}
+	
+	/**
+	 * Draw the Explosion
+	 */
 	public boolean draw(Canvas canvas, long currentTime) {
 		boolean isAlive = false;
 		for (Explosion.Particle particle : particles) {
 			if (particle.isAlive()) {
+				// Ensure that the Explosion should still be alive
 				isAlive = particle.draw(canvas, currentTime) || isAlive;
 			}
 		}
 		return isAlive;
 	}
 	
+	/**
+	 * Move the Particles of the explosion by the specified gravity
+	 */
 	public void move(long currentTime, double gravityX, double gravityY) {
 		for(Explosion.Particle particle : particles) {
 			particle.move(currentTime, gravityX, gravityY);
 		}
 	}
 	
+	/**
+	 * Bring the Explosion to life.
+	 */
 	public void makeAlive(long startTime) {
 		state = ALIVE;
 		for (Explosion.Particle particle : particles) {
+			// The particles will die, each at a random time
 			particle.makeAlive(startTime + sleep, random.nextInt(6000) + 1000);
 		}
+		activity.soundThread.play(MainActivity.SOUND_EXPLOSION);
 	}
 	
+	/**
+	 * Report whether the Explosion is alive of dead
+	 */
 	public boolean isAlive() {
 		return state;
 	}
 	
+	/**
+	 * Particle Subclass
+	 * Handles the moving, drawing, and state tracking of individual Particles
+	 */
 	static public class Particle {
 		// Constants
 		static final public boolean ALIVE = true;
 		static final public boolean DEAD = false;
 
+		// State variables
 		public double currentX;
 		public double currentY;
 		public double previousX;
@@ -90,9 +107,7 @@ public class Explosion {
 		private long startTime;
 		private long endTime;
 		
-		int count = 0;
-		
-		Ember ember = new Ember();
+		Ember ember = new Ember(); // the Ember that represents this particle
 
 		/**
 		 * Particle Constructor
@@ -109,7 +124,7 @@ public class Explosion {
 		}
 		
 		/**
-		 * Draw the ember
+		 * Draw the ember.
 		 */
 		public boolean draw(Canvas canvas, long currentTime) {
 			if (currentTime >= startTime) {
@@ -124,7 +139,7 @@ public class Explosion {
 		}
 		
 		/**
-		 * Move the ember
+		 * Move the ember.
 		 */
 		public void move(long currentTime, double gravityX, double gravityY) {
 			// Only move the particle if it is done sleeping
@@ -151,18 +166,22 @@ public class Explosion {
 				currentX += velocityX;
 				currentY += velocityY;
 			}
-			
 			previousUpdate = currentTime;
 		}
 
+		/**
+		 * Bring the Particle to life.
+		 */
 		public void makeAlive(long startTime, long lifeLength) {
 			state = ALIVE;
 			previousUpdate = startTime;
 			this.startTime = startTime;
 			endTime = this.startTime + lifeLength;
-			activity.soundThread.play(1);
 		}
 		
+		/**
+		 * Return the state of the Particle, alive or dead
+		 */
 		public boolean isAlive() {
 			return state;
 		}

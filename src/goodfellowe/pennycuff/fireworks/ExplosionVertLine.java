@@ -1,12 +1,21 @@
+/**
+ * by Corey Pennycuff and Rob Goodfellowe
+ */
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
+/**
+ * ExplosionVertLine class
+ * Creates an explosion whose Particles are initially in a vertical area
+ */
 public class ExplosionVertLine extends Explosion {
 
+	/**
+	 * Constructor
+	 */
 	public ExplosionVertLine(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);
-		
 
 		Random random = new Random();
 		numParticles = 75;
@@ -15,12 +24,10 @@ public class ExplosionVertLine extends Explosion {
 		double maxRadius = .00000001;
 		double radians;
 		double angle;
-		double velX;
-		double velY;
 		double scaleFactor;
 		double differenceMagnitude = 30;
-		
-				
+		int color = random.nextInt(Ember.LIGHTS_TOTAL);
+
 		for (int i = 0; i < numParticles; i++) {
 			angle = random.nextDouble() * 360;
 			radians = (angle * Math.PI) / 180;
@@ -56,18 +63,10 @@ public class ExplosionVertLine extends Explosion {
 				scaleFactor = Math.pow(1+Math.cos(radians), differenceMagnitude);
 				radius = 0;	
 			}
-			
-			
-			
-			//radians = random.nextDouble() * 2 * Math.PI;
-			particles[i] = new Explosion.Particle(x,  y, 100, screenHeight);
-			//particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();
-			//particles[i].velocityY = Math.sin(radians) * radius * random.nextDouble();
+
+			particles[i] = new Explosion.Particle(x,  y, color, screenHeight);
 			particles[i].velocityX = Math.cos(radians) * radius * random.nextDouble();
 			particles[i].velocityY = Math.sin(radians) * radius * random.nextDouble();
-			}
-		
-
+		}
 	}
-
 }

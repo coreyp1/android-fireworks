@@ -1,22 +1,16 @@
 /**
- * 
+ * by Corey Pennycuff and Rob Goodfellowe
  */
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
-import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.media.MediaPlayer;
-import android.util.Log;
-import android.media.MediaPlayer;
-import android.media.AudioManager;
-import android.media.SoundPool;
 
 /**
- * @author Corey Pennycuff and Rob Goodfellowe
- *
+ * Rocket Class
+ * Draws an ember along a hyperbolic path to a target, then draws an explosion
+ * at that point.
  */
 public class Rocket {
 	// Constants
@@ -48,13 +42,20 @@ public class Rocket {
 	private Explosion explosion;
 
 	/**
-	 * 
+	 * Constructor
 	 */
 	public Rocket(MainActivity activity) {
 		state = DEAD;
 		this.activity = activity;
 	}
 	
+	/**
+	 * Determine the variables needed in order to compute the hyperbolic
+	 * posion of the Rocket as a function of X.
+	 * x0, y0 is the origin, x0 is always "0".
+	 * x1, y1 is the target.
+	 * x2, y2 is the apex of the hyperbolea. x2 will be computed
+	 */
 	public boolean defineCriticalPoints(int y0, int y2, int x1, int y1, long duration, int screenWidth, int screenHeight) {
 		lastX = 0;
 		lastY = (int) y0;
@@ -91,25 +92,29 @@ public class Rocket {
 		return true;
 	}
 	
+	/**
+	 * Return the Y value for the supplied X.
+	 */
 	private double position(float x) {
 		return (x * ((coefA * x) + coefB)) + y0;
 	}
 	
 	/**
 	 * Return the value that should be used for x at the specified time.
-	 * @param time
-	 * @return
 	 */
 	private float xval(long time) {
 		/**
 		 * Uses the cross-multiplication equivalence
-		 * x1             ??
-		 * -------- = ----------
+		 *    x1            ??
+		 * -------- = --------------
 		 * duration   time - started
 		 */
 		return (x1) * (time - started) / duration;
 	}
 	
+	/**
+	 * Indicate that the Rocket should be brought to life
+	 */
 	public void makeAlive(long lastUpdate) {
 		state = ALIVE;
 		this.lastUpdate = lastUpdate;
@@ -121,10 +126,16 @@ public class Rocket {
 		activity.soundThread.play(2);
 	}
 	
+	/**
+	 * Return whether or not the Rocket is alive
+	 */
 	public boolean isAlive() {
 		return state;
 	}
 	
+	/**
+	 * Draw the Rocket on the Canvas
+	 */
 	public void draw(Canvas canvas, long currentTime, double gravityX, double gravityY) {
 		if (state == ALIVE) {
 			if (stage == STAGE_ROCKET) {
@@ -142,9 +153,10 @@ public class Rocket {
 				lastX = newX;
 				lastY = newY;
 				if (currentTime > cutoff && stage == STAGE_ROCKET) {
+					// Create a new Explosion
 					Random random = new Random();
 					stage = STAGE_EXPLOSION;
-					switch (random.nextInt(11)) {
+					switch (random.nextInt(9)) {
 					case 0:
 						explosion = (Explosion) new ExplosionRandom(lastX, lastY, screenHeight);
 						break;
@@ -172,15 +184,6 @@ public class Rocket {
 					case 8:
 						explosion = (Explosion) new ExplosionStar(lastX, lastY, screenHeight);
 						break;
-					case 9:
-						explosion = (Explosion) new ExplosionStar(lastX, lastY, screenHeight);
-						break;
-					case 10:
-						explosion = (Explosion) new ExplosionStar(lastX, lastY, screenHeight);
-						break;
-					//case 11:
-					//explosion = (Explosion) new ExplosionRing(lastX, lastY, screenHeight);
-					//break;
 					}
 					explosion.setActivity(activity);
 					explosion.makeAlive(currentTime);
@@ -200,12 +203,17 @@ public class Rocket {
 		}
 	}
 	
+	/**
+	 * Return the value of the current X
+	 */
 	public int getCurrentX() {
 		return lastX;
 	}
 	
+	/**
+	 * Return the value of the current Y
+	 */
 	public int getCurrentY() {
 		return lastY;
 	}
-
 }

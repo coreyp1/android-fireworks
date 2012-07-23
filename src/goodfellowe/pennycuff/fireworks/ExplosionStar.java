@@ -1,9 +1,19 @@
+/**
+ * by Corey Pennycuff and Rob Goodfellowe
+ */
 package goodfellowe.pennycuff.fireworks;
 
 import java.util.Random;
 
+/**
+ * ExplosionStar Class
+ * Creates a star shaped explosion
+ */
 public class ExplosionStar extends Explosion {
 
+	/**
+	 * Constructor
+	 */
 	public ExplosionStar(int x, int y, int screenHeight) {
 		super(x, y, screenHeight);
 		Random random = new Random();
