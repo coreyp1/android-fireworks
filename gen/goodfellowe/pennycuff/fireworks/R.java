@@ -18,14 +18,17 @@ public final class R {
     public static final class drawable {
         public static final int ic_action_search=0x7f020000;
         public static final int ic_launcher=0x7f020001;
+        public static final int icon=0x7f020002;
     }
     public static final class id {
         public static final int RelativeLayout=0x7f090000;
         public static final int adjustFrequencySeekBar=0x7f090008;
         public static final int adjustFrequencyTextView=0x7f090007;
         public static final int automaticFireworks=0x7f090006;
-        public static final int menu_credits=0x7f09000a;
-        public static final int menu_settings=0x7f090009;
+        public static final int detectGravity=0x7f09000a;
+        public static final int menu_credits=0x7f09000c;
+        public static final int menu_settings=0x7f09000b;
+        public static final int playSounds=0x7f090009;
         public static final int skyView=0x7f090001;
         public static final int spangled=0x7f090002;
         public static final int stripes=0x7f090005;
@@ -62,16 +65,34 @@ public final class R {
     credits section of the app 
          */
         public static final int credits=0x7f060007;
+        /**  Text used to close the Credits Dialog 
+         */
+        public static final int creditsOK=0x7f06000c;
         /**  Text in the settings.xml which prompts user to detect the rotation
     of the screen and align gravity with the rotation of the device 
          */
         public static final int detectGravity=0x7f060005;
-        /**  Text in settings.xml which prompts user to disable sounds 
+        /**  Text used by the Credits Credits Title 
          */
-        public static final int disableSounds=0x7f060006;
+        public static final int menuCredits=0x7f06000b;
+        /**  HTML Text used in the Credits Dialog 
+         */
+        public static final int menuCreditsText=0x7f06000d;
+        /**  Text used by the Settings dialong box title 
+         */
+        public static final int menuSettings=0x7f060008;
+        /**  Text used by the Settings dialog Cancel button 
+         */
+        public static final int menuSettingsCancel=0x7f06000a;
+        /**  Text used by the Settings dialog Save button 
+         */
+        public static final int menuSettingsSave=0x7f060009;
         /**  Used to display option to change settings in the menu 
          */
         public static final int menu_settings=0x7f060001;
+        /**  Text in settings.xml which prompts user to disable sounds 
+         */
+        public static final int playSounds=0x7f060006;
         /**  Title for the home screen 
          */
         public static final int title_activity_main=0x7f060002;

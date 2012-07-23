@@ -26,13 +26,31 @@ and create an animated fireworks show
     
     <!-- Text in the settings.xml which prompts user to detect the rotation
     of the screen and align gravity with the rotation of the device -->
-    <string name="detectGravity">Detect Gravity</string>
+    <string name="detectGravity">Gravity response</string>
     
     <!-- Text in settings.xml which prompts user to disable sounds -->
-    <string name="disableSounds">Disable sounds</string>
+    <string name="playSounds">Play sounds</string>
     
     <!-- Text used by the menu to prompt user to click, and enter the
     credits section of the app -->
     <string name="credits">Credits</string>
-
+    
+    <!-- Text used by the Settings dialong box title -->
+    <string name="menuSettings">Settings</string>
+    
+    <!-- Text used by the Settings dialog Save button -->
+    <string name="menuSettingsSave">Save</string>
+    
+    <!-- Text used by the Settings dialog Cancel button -->
+    <string name="menuSettingsCancel">Cancel</string>
+    
+    <!-- Text used by the Credits Credits Title -->
+    <string name="menuCredits">Credits</string>
+    
+    <!-- Text used to close the Credits Dialog -->
+    <string name="creditsOK">Awesome!</string>
+    
+    <!-- HTML Text used in the Credits Dialog -->
+    <string name="menuCreditsText">&lt;h2&gt;Programmers&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;Rob Goodfellowe&lt;/li&gt;&lt;li&gt;Corey Pennycuff&lt;/li&gt;&lt;/ul&gt;&lt;h2&gt;Fireworks Alpha Transparency Idea&lt;/h2&gt;&lt;dl&gt;&lt;dt&gt;&lt;b&gt;Paul Lewis&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;http://creativejs.com/tutorials/creating-fireworks/&lt;/dd&gt;&lt;/dl&gt;&lt;h2&gt;Sounds&lt;/h2&gt;&lt;dl&gt;&lt;dt&gt;&lt;b&gt;Explosions&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;http://www.freesound.org/people/Robinhood76/sounds/65731/&lt;/br&gt;http://www.freesound.org/people/Robinhood76/sounds/87529/&lt;/dd&gt;&lt;/dl&gt;&lt;h2&gt;Music&lt;/h2&gt;&lt;p&gt;All music provided by the US Marine Corps Band&lt;/p&gt;&lt;dl&gt;&lt;dt&gt;&lt;b&gt;The Star Spangled Banner&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;by Francis Scott Key&lt;/dd&gt;&lt;dt&gt;&lt;dt&gt;&lt;b&gt;The Thunderer&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;by John Philip Sousa&lt;/dd&gt;&lt;dt&gt;&lt;b&gt;The Washington Post&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;by John Philip Sousa&lt;/dd&gt;&lt;dt&gt;&lt;b&gt;The Stars and Stripes Forever&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;by John Philip Sousa&lt;/dd&gt;&lt;/dl&gt;</string>
+   
 </resources>

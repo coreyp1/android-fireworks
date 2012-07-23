@@ -41,10 +41,10 @@ public class SkyView extends SurfaceView implements SurfaceHolder.Callback {
 	// State variables
 	private int screenWidth; // Width of the screen
 	private int screenHeight; // Height of the screen
-	private int fireworksGenerationMode; // Tracks how fireworks are generated
+	public int fireworksGenerationMode; // Tracks how fireworks are generated
 	private MainActivity activity; // Link to the parent activity
 	private Random random = new Random(); // Used for all random values
-	private int frequency = 20; // Average frequency of adding rockets
+	public int frequency = 20; // Average frequency of adding rockets
 	
 	// Rockets and Explosions
 	private Set<Rocket> rockets = new HashSet<Rocket>(); // Stores all rockets

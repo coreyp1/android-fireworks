@@ -54,7 +54,7 @@ public class Rocket {
 	
 	/**
 	 * Determine the variables needed in order to compute the hyperbolic
-	 * posion of the Rocket as a function of X.
+	 * position of the Rocket as a function of X.
 	 * x0, y0 is the origin, x0 is always "0".
 	 * x1, y1 is the target.
 	 * x2, y2 is the apex of the hyperbola. x2 will be computed
