@@ -30,7 +30,7 @@ public class Ember {
 	static final public int LIGHT_SIZE = 20;
 	static final public int LIGHT_MASTER_SIZE = LIGHT_SIZE * LIGHTS_ACROSS;
 	static final public int LIGHT_SIZE_OFFSET = LIGHT_SIZE / 2;
-	static final public float LIGHT_ALPHA = (float) .8;
+	static final public float LIGHT_ALPHA = (float) .75;
 
     // Bitmap related variables for Ember colors
 	static public Bitmap lightBitmap = Bitmap.createBitmap(LIGHT_MASTER_SIZE,
