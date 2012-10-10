@@ -25,9 +25,9 @@ public class Ember {
 	// Constants
 	static final public boolean ALIVE = true;
 	static final public boolean DEAD = false;
-	static final public int LIGHTS_ACROSS = 18;
+	static final public int LIGHTS_ACROSS = 3;
 	static final public int LIGHTS_TOTAL = LIGHTS_ACROSS * LIGHTS_ACROSS;
-	static final public int LIGHT_SIZE = 9;
+	static final public int LIGHT_SIZE = 20;
 	static final public int LIGHT_MASTER_SIZE = LIGHT_SIZE * LIGHTS_ACROSS;
 	static final public int LIGHT_SIZE_OFFSET = LIGHT_SIZE / 2;
 	static final public float LIGHT_ALPHA = (float) .8;
